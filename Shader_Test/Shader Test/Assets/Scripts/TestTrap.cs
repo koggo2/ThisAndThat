@@ -7,6 +7,11 @@ public class TestTrap : MonoBehaviour, iDungeonActor
 {
     private GameObject _triggeredPlayer = null;
     private bool _activated = false;
+
+    void Start()
+    {
+        _activated = false;
+    }
     
     public IEnumerator DoAct(Action endCallback)
     {
