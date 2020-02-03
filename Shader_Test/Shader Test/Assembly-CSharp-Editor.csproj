@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\PathCreator\Examples\Scripts\Editor\PathSceneToolEditor.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\Editor\TileMapEditor.cs" />
      <Compile Include="Assets\Tutorial_Info\Scripts\Editor\ReadmeEditor.cs" />
  <Reference Include="UnityEditor.TestRunner">
  <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/UnityEditor.TestRunner.dll</HintPath>
@@ -90,6 +91,9 @@
  </Reference>
  <Reference Include="Unity.Postprocessing.Runtime">
  <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Tilemap.Editor">
+ <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

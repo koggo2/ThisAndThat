@@ -66,7 +66,9 @@
      <Compile Include="Assets\Scripts\ASimulator\CatmullRom.cs" />
      <Compile Include="Assets\Scripts\ASimulator\InputController.cs" />
      <Compile Include="Assets\Scripts\ASimulator\PathManager.cs" />
+     <Compile Include="Assets\Scripts\ASimulator\PathRenderer.cs" />
      <Compile Include="Assets\Scripts\ASimulator\RailPoint.cs" />
+     <Compile Include="Assets\Scripts\ASimulator\RoadMeshRenderer.cs" />
      <Compile Include="Assets\Scripts\ASimulator\UIEventHandler.cs" />
      <Compile Include="Assets\Scripts\DungeonCommandController.cs" />
      <Compile Include="Assets\Scripts\Interfaces\iDungeonActor.cs" />
@@ -76,6 +78,9 @@
      <Compile Include="Assets\Scripts\TestMonster_Idle.cs" />
      <Compile Include="Assets\Scripts\TestPlayer.cs" />
      <Compile Include="Assets\Scripts\TestTrap.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\BaseBasement.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\BaseUnit.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\TileMap.cs" />
      <Compile Include="Assets\Tutorial_Info\Scripts\Readme.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
@@ -103,6 +108,9 @@
  </Reference>
  <Reference Include="Unity.Postprocessing.Runtime">
  <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/Unity.Postprocessing.Runtime.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.2D.Tilemap.Editor">
+ <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>

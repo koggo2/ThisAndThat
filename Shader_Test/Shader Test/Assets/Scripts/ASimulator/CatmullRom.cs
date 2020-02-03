@@ -39,6 +39,36 @@ public class CatmullRom
         return splinePoints;
     }
 
+    public Vector3 GetPoint(int index)
+    {
+        if(splinePoints == null)
+        {
+            throw new System.NullReferenceException("Spline not Initialized!");
+        }
+
+        return splinePoints[index].position;
+    }
+
+    public Vector3 GetTangent(int index)
+    {
+        if(splinePoints == null)
+        {
+            throw new System.NullReferenceException("Spline not Initialized!");
+        }
+
+        return splinePoints[index].tangent;
+    }
+    
+    public Vector3 GetNormal(int index)
+    {
+        if(splinePoints == null)
+        {
+            throw new System.NullReferenceException("Spline not Initialized!");
+        }
+
+        return splinePoints[index].normal;
+    }
+
     public CatmullRom(Transform[] controlPoints, int resolution, bool closedLoop)
     {
         if(controlPoints == null || controlPoints.Length <= 2 || resolution < 2)

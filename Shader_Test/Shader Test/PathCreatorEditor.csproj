@@ -63,6 +63,9 @@
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.2D.Tilemap.Editor">
+ <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/Unity.2D.Tilemap.Editor.dll</HintPath>
+ </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>

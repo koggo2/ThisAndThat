@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4050403524429934}
   - component: {fileID: 3447068523563851315}
+  - component: {fileID: -7468856808957299695}
   m_Layer: 0
   m_Name: Catmull Path
   m_TagString: Untagged
@@ -48,3 +49,24 @@ MonoBehaviour:
     type: 3}
   _catmullRom:
     splinePoints: []
+--- !u!114 &-7468856808957299695
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1801384024788032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61596a95792367d4ea9d79fa5e16ddb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Path: {fileID: 3447068523563851315}
+  autoUpdate: 1
+  roadWidth: 0.4
+  thickness: 0.15
+  flattenSurface: 0
+  roadMaterial: {fileID: 2100000, guid: b5df4735192845740bd11076dc9cdc99, type: 2}
+  undersideMaterial: {fileID: 2100000, guid: c1d8d882244c5344fa86a8fd23246f81, type: 2}
+  textureTiling: 1
+  meshHolder: {fileID: 0}
