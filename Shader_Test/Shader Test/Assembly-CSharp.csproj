@@ -79,7 +79,10 @@
      <Compile Include="Assets\Scripts\TestPlayer.cs" />
      <Compile Include="Assets\Scripts\TestTrap.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseBasement.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\BaseObject.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\BaseTile.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseUnit.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\Const.cs" />
      <Compile Include="Assets\Tile Game\Scripts\TileMap.cs" />
      <Compile Include="Assets\Tutorial_Info\Scripts\Readme.cs" />
  <Reference Include="Unity.Timeline.Editor">

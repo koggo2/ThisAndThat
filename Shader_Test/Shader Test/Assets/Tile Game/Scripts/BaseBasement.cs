@@ -2,17 +2,31 @@
 
 namespace TheTile.Game
 {
-    public class BaseBasement : MonoBehaviour
+    public class BaseBasement : BaseObject
     {
         [SerializeField] private GameObject _testUnitPrefab;
-        
-        public GameObject GenerateUnit(Grid grid, Transform parent)
+
+        private void Awake()
         {
-            var testCubeInstance = Instantiate(_testUnitPrefab);
-            testCubeInstance.transform.SetParent(parent);
+            var renderers = GetComponentsInChildren<Renderer>();
+            foreach (var renderer in renderers)
+            {
+                renderer.material.color = Const.GetTeamColor(Team);
+            }
+        }
+        
+        public BaseUnit GenerateUnit(Grid grid, Transform parent)
+        {
+            var testUnitInstance = Instantiate(_testUnitPrefab);
+            testUnitInstance.transform.SetParent(parent);
 
             var cellPosition = grid.WorldToCell(transform.position);
-            testCubeInstance.transform.localPosition = grid.GetCellCenterLocal(cellPosition);
+            testUnitInstance.transform.localPosition = grid.GetCellCenterLocal(cellPosition);
+
+            var baseUnit = testUnitInstance.GetComponent<BaseUnit>(); 
+            baseUnit.SetTeam(Team);
+            
+            return baseUnit;
         }
     }
 }
