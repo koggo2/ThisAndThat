@@ -6,6 +6,8 @@ namespace TheTile.Game
     {
         [SerializeField] private GameObject _testUnitPrefab;
 
+        private int dTurn = 0; 
+
         private void Awake()
         {
             var renderers = GetComponentsInChildren<Renderer>();
@@ -15,18 +17,24 @@ namespace TheTile.Game
             }
         }
         
-        public BaseUnit GenerateUnit(Grid grid, Transform parent)
+        public BaseUnit GenerateUnit(Transform parent)
         {
-            var testUnitInstance = Instantiate(_testUnitPrefab);
-            testUnitInstance.transform.SetParent(parent);
+            ++dTurn;
 
-            var cellPosition = grid.WorldToCell(transform.position);
-            testUnitInstance.transform.localPosition = grid.GetCellCenterLocal(cellPosition);
+            if (dTurn >= 2)
+            {
+                dTurn = 0;
+                
+                var testUnitInstance = Instantiate(_testUnitPrefab);
+                testUnitInstance.transform.SetParent(parent);
 
-            var baseUnit = testUnitInstance.GetComponent<BaseUnit>(); 
-            baseUnit.SetTeam(Team);
+                var baseUnit = testUnitInstance.GetComponent<BaseUnit>(); 
+                baseUnit.SetTeam(Team);
             
-            return baseUnit;
+                return baseUnit;                
+            }
+
+            return null;
         }
     }
 }

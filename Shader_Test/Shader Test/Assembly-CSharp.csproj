@@ -78,11 +78,16 @@
      <Compile Include="Assets\Scripts\TestMonster_Idle.cs" />
      <Compile Include="Assets\Scripts\TestPlayer.cs" />
      <Compile Include="Assets\Scripts\TestTrap.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\AStarSearch.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseBasement.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseObject.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseTile.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseUnit.cs" />
      <Compile Include="Assets\Tile Game\Scripts\Const.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\GameGrid.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\Interface\WeightedGraph.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\PriorityQueue.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\TileData.cs" />
      <Compile Include="Assets\Tile Game\Scripts\TileMap.cs" />
      <Compile Include="Assets\Tutorial_Info\Scripts\Readme.cs" />
  <Reference Include="Unity.Timeline.Editor">
