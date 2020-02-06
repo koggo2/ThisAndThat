@@ -8,21 +8,26 @@ namespace TheTile
 {
     public class GameGrid : MonoBehaviour, WeightedGraph<Vector3Int>
     {
-        public static Vector3Int TOP_LEFT = new Vector3Int(-1, -1, 0);
-        public static Vector3Int TOP_RIGHT = new Vector3Int(0, -1, 0);
-        public static Vector3Int RIGHT = new Vector3Int(1, 0, 0);
-        public static Vector3Int BOTTOM_RIGHT = new Vector3Int(0, 1, 0);
-        public static Vector3Int BOTTOM_LEFT = new Vector3Int(-1, 1, 0);
-        public static Vector3Int LEFT = new Vector3Int(-1, 0, 0);
-
-        public static readonly Vector3Int[] DIRS = new[]
+        public static readonly Vector3Int[,] DIRS = new Vector3Int[,]
         {
-            new Vector3Int(-1, -1, 0),
-            new Vector3Int(0, -1, 0),
-            new Vector3Int(1, 0, 0),
-            new Vector3Int(0, 1, 0),
-            new Vector3Int(-1, 1, 0),
-            new Vector3Int(-1, 0, 0),
+            // Even row
+            {
+                new Vector3Int(-1, -1, 0),
+                new Vector3Int(0, -1, 0),
+                new Vector3Int(1, 0, 0),
+                new Vector3Int(0, 1, 0),
+                new Vector3Int(-1, 1, 0),
+                new Vector3Int(-1, 0, 0),
+            },
+            // Odd row
+            {
+                new Vector3Int(0, -1, 0),
+                new Vector3Int(1, -1, 0),
+                new Vector3Int(1, 0, 0),
+                new Vector3Int(1, 1, 0),
+                new Vector3Int(0, 1, 0),
+                new Vector3Int(-1, 0, 0),                
+            }
         };
         
         [SerializeField] private Grid _grid;
@@ -43,10 +48,13 @@ namespace TheTile
             foreach (var baseTile in tiles)
             {
                 var cellPos = _grid.WorldToCell(baseTile.transform.position);
-                _gridMap.Add(cellPos, new TileData()
+                var tileData = new TileData()
                 {
                     Tile = baseTile,
-                });
+                };
+                tileData.Tile.CellPos = cellPos;
+                
+                _gridMap.Add(cellPos, tileData);
             }
 
             var basements = FindObjectsOfType<BaseBasement>();
@@ -92,12 +100,14 @@ namespace TheTile
             }
 
             var currentMapData = _gridMap[currentPos];
+            var destMapData = _gridMap[destination];
             if (currentMapData.Unit != null)
             {
                 var unit = currentMapData.Unit;
                 currentMapData.Unit = null;
 
-                unit.Move(_grid.GetCellCenterWorld(destination));
+                destMapData.Tile.AttachUnit(unit);
+                // unit.Move(_grid.GetCellCenterWorld(destination));
 
                 AddUnit(destination, unit);
             }
@@ -128,8 +138,10 @@ namespace TheTile
 
         public IEnumerable<Vector3Int> Neighbors(Vector3Int pos)
         {
-            foreach (var dir in DIRS)
+            var parity = pos.y & 1;
+            for (int i = 0; i < 6; ++i)
             {
+                var dir = DIRS[parity, i];
                 var next = new Vector3Int(pos.x + dir.x, pos.y + dir.y, pos.z + dir.z);
                 if (Possible(next))
                 {
@@ -140,30 +152,31 @@ namespace TheTile
         
         public Vector3Int GetRandomNeighborTile(Vector3Int originPos)
         {
+            var parity = originPos.y & 1;
             List<Vector3Int> directions = new List<Vector3Int>();
-            if (_gridMap.ContainsKey(originPos + TOP_LEFT))
+            if (_gridMap.ContainsKey(originPos + DIRS[parity, 0]))
             {
-                directions.Add(TOP_LEFT);
+                directions.Add(DIRS[parity, 0]);
             }
-            if (_gridMap.ContainsKey(originPos + TOP_RIGHT))
+            if (_gridMap.ContainsKey(originPos + DIRS[parity, 1]))
             {
-                directions.Add(TOP_RIGHT);
+                directions.Add(DIRS[parity, 1]);
             }
-            if (_gridMap.ContainsKey(originPos + RIGHT))
+            if (_gridMap.ContainsKey(originPos + DIRS[parity, 2]))
             {
-                directions.Add(RIGHT);
+                directions.Add(DIRS[parity, 2]);
             }
-            if (_gridMap.ContainsKey(originPos + BOTTOM_RIGHT))
+            if (_gridMap.ContainsKey(originPos + DIRS[parity, 3]))
             {
-                directions.Add(BOTTOM_RIGHT);
+                directions.Add(DIRS[parity, 3]);
             }
-            if (_gridMap.ContainsKey(originPos + BOTTOM_LEFT))
+            if (_gridMap.ContainsKey(originPos + DIRS[parity, 4]))
             {
-                directions.Add(BOTTOM_LEFT);
+                directions.Add(DIRS[parity, 4]);
             }
-            if (_gridMap.ContainsKey(originPos + LEFT))
+            if (_gridMap.ContainsKey(originPos + DIRS[parity, 5]))
             {
-                directions.Add(LEFT);
+                directions.Add(DIRS[parity, 5]);
             }
 
             return directions[Random.Range(0, directions.Count)];

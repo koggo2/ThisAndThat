@@ -90,6 +90,13 @@
      <Compile Include="Assets\Tile Game\Scripts\TileData.cs" />
      <Compile Include="Assets\Tile Game\Scripts\TileMap.cs" />
      <Compile Include="Assets\Tutorial_Info\Scripts\Readme.cs" />
+     <None Include="Assets\PolygonMini_Fantasy\Shaders\DistanceGradient.shader" />
+     <None Include="Assets\PolygonMini_Fantasy\Shaders\WorldFog.shader" />
+     <None Include="Assets\PolygonMini_Fantasy\Shaders\LocalFog_Multiply.shader" />
+     <None Include="Assets\PolygonMini_Fantasy\Shaders\WorldGradient.shader" />
+     <None Include="Assets\PolygonMini_Fantasy\Shaders\LocalFog_Overlay.shader" />
+     <None Include="Assets\PolygonMini_Fantasy\Shaders\LocalFog_Add.shader" />
+     <None Include="Assets\PolygonMini_Fantasy\Shaders\LocalGradient.shader" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>C:/Users/User/Documents/Works/Git.ThisAndThat/Shader_Test/Shader Test/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>

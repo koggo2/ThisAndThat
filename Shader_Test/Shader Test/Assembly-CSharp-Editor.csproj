@@ -57,6 +57,7 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\PathCreator\Examples\Scripts\Editor\PathSceneToolEditor.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\Editor\BaseTileEditor.cs" />
      <Compile Include="Assets\Tile Game\Scripts\Editor\TileMapEditor.cs" />
      <Compile Include="Assets\Tutorial_Info\Scripts\Editor\ReadmeEditor.cs" />
  <Reference Include="UnityEditor.TestRunner">

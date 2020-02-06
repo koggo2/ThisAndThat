@@ -24,14 +24,15 @@ namespace TheTile
                 {
                     var testTileInstance = Instantiate(_testTilePrefab);
                     testTileInstance.transform.SetParent(transform);
+                    testTileInstance.name = $"Test Tile {x},{y}";
 
                     var cellPos = new Vector3Int(x, y, 0);
                     testTileInstance.transform.localPosition = _gameGrid.CellPosToVector(cellPos);
                 }
             }
 
-            GenerateBasement(_aBaseHouse, BaseObject.TeamEnum.A);
-            GenerateBasement(_bBaseHouse, BaseObject.TeamEnum.B);
+            // GenerateBasement(_aBaseHouse, BaseObject.TeamEnum.A);
+            // GenerateBasement(_bBaseHouse, BaseObject.TeamEnum.B);
         }
 
         private void GenerateBasement(Vector3Int cellPosition, BaseObject.TeamEnum teamEnum)
