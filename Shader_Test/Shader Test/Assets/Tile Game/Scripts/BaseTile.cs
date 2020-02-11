@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace TheTile.Game
@@ -21,15 +18,9 @@ namespace TheTile.Game
             _pivot.localPosition = new Vector3(0f, Random.Range(-1f, 1f), 0f);
         }
         
-        public void SetTeam(TeamEnum unitTeam)
+        public virtual void SetTeam(TeamEnum unitTeam)
         {
             Team = unitTeam;
-            
-            var renderers = GetComponentsInChildren<Renderer>();
-            foreach (var renderer in renderers)
-            {
-                renderer.material.color = Const.GetTeamColor(Team);
-            }
         }
 
         public void AttachUnit(BaseUnit unit)
@@ -48,7 +39,7 @@ namespace TheTile.Game
             var selectionUIPrefab = Resources.Load<GameObject>("Tile Selection");
             var instance = Instantiate(selectionUIPrefab);
             instance.transform.parent = _pivot;
-            instance.transform.localPosition = Vector3.zero;
+            instance.transform.localPosition = new Vector3(0f, 1f, 0f);
             instance.transform.localRotation = Quaternion.identity;
             instance.transform.localScale = Vector3.one;
 
@@ -57,7 +48,7 @@ namespace TheTile.Game
 
         private void OnMouseUp()
         {
-            
+            TileMap.Instance.OrderToMove(this);
         }
 
         private void OnMouseExit()

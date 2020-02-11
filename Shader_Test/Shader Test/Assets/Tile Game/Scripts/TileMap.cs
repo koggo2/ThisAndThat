@@ -1,20 +1,24 @@
 ﻿
+using System.Collections.Generic;
 using TheTile.Game;
+using UnityEditor;
 using UnityEngine;
 
 namespace TheTile
 {
-    public class TileMap : MonoBehaviour
+    public class TileMap : Singleton<TileMap>
     {
         [SerializeField] private GameGrid _gameGrid;
         [SerializeField] private GameObject _testTilePrefab;
-        [SerializeField] private GameObject _testUnitPrefab;
-        [SerializeField] private GameObject _testBasementPrefab;
-        
-        [SerializeField] private Vector3Int _aBaseHouse;
-        [SerializeField] private Vector3Int _bBaseHouse;
+
+        private Dictionary<Vector3Int, Vector3Int> _allWay;
+        private List<Vector3Int> _way;
 
         private float dTime = 1f;
+
+        private void Awake()
+        {
+        }
 
         public void GenerateTileMap()
         {
@@ -30,20 +34,6 @@ namespace TheTile
                     testTileInstance.transform.localPosition = _gameGrid.CellPosToVector(cellPos);
                 }
             }
-
-            // GenerateBasement(_aBaseHouse, BaseObject.TeamEnum.A);
-            // GenerateBasement(_bBaseHouse, BaseObject.TeamEnum.B);
-        }
-
-        private void GenerateBasement(Vector3Int cellPosition, BaseObject.TeamEnum teamEnum)
-        {
-            var testCubeInstance = Instantiate(_testBasementPrefab);
-            testCubeInstance.transform.SetParent(transform);
-
-            testCubeInstance.transform.localPosition = _gameGrid.CellPosToVector(cellPosition);
-            
-            var basement = testCubeInstance.GetComponent<BaseBasement>();
-            basement.Team = teamEnum;
         }
 
         private void LateUpdate()
@@ -78,6 +68,44 @@ namespace TheTile
                 
                 _gameGrid.UpdateGrid();
             }
+
+#if UNITY_EDITOR
+            if (_allWay != null)
+            {
+                foreach (var cf in _allWay)
+                {
+                    var key = _gameGrid.CellPosToVector(cf.Key);
+                    var value = _gameGrid.CellPosToVector(cf.Value);
+                    key += new Vector3(0f, 2f, 0f);
+                    value += new Vector3(0f, 2f, 0f);
+                    Debug.DrawLine(key, value, Color.cyan);
+                }
+            }
+            
+            if (_way != null && _way.Count > 1)
+            {
+                var prev = _way[0];
+                foreach (var pos in _way)
+                {
+                    var a = _gameGrid.CellPosToVector(prev);
+                    var b = _gameGrid.CellPosToVector(pos);
+                    a += new Vector3(0f, 2.1f, 0f);
+                    b += new Vector3(0f, 2.1f, 0f);
+                    Debug.DrawLine(a, b, Color.red);
+                    prev = pos;
+                }
+            }
+#endif
+        }
+
+        public void OrderToMove(BaseTile baseTile)
+        {
+            
+            var aStar = new AStarSearch(_gameGrid, new Vector3Int(0, 0, 0), baseTile.CellPos);
+            var index = 0;
+
+            _allWay = aStar.CameFrom;
+            _way = aStar.Path;
         }
     }
 }

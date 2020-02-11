@@ -18,12 +18,6 @@ namespace TheTile.Game
         public void SetTeam(TeamEnum team)
         {
             Team = team;
-            
-            var renderers = GetComponentsInChildren<Renderer>();
-            foreach (var renderer in renderers)
-            {
-                renderer.material.color = Const.GetTeamColor(Team);
-            }
         }
 
         public void Move(Vector3 position)

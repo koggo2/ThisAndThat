@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using TheTile.Util;
 using UnityEngine;
@@ -10,6 +9,7 @@ namespace TheTile.Game
     {
         public Dictionary<Vector3Int, Vector3Int> CameFrom  = new Dictionary<Vector3Int, Vector3Int>();
         public Dictionary<Vector3Int, int> CostSoFar = new Dictionary<Vector3Int, int>();
+        public List<Vector3Int> Path = new List<Vector3Int>();
         
         public static int Heuristic(Vector3Int a, Vector3Int b)
         {
@@ -30,6 +30,14 @@ namespace TheTile.Game
 
                 if (current.Equals(destination))
                 {
+                    Path.Add(current);
+                    var rear = current;
+                    
+                    while (CameFrom.ContainsKey(rear) && CameFrom[rear] != rear)
+                    {
+                        Path.Add(CameFrom[rear]);
+                        rear = CameFrom[rear];
+                    }
                     break;
                 }
 
