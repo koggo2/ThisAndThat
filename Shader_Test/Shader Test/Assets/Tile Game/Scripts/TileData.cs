@@ -1,5 +1,6 @@
 ﻿
 using System.Collections.Generic;
+using System.Linq;
 using TheTile.Game;
 using UnityEngine;
 
@@ -12,7 +13,7 @@ namespace TheTile
         public BaseUnit Unit;
         public BaseBasement Basement;
 
-        public List<BaseUnit> TemporaryUnit;
+        public Queue<BaseUnit> TemporaryUnit;
         
 
         public TileData()
@@ -21,24 +22,16 @@ namespace TheTile
             Tile = null;
             Unit = null;
             Basement = null;
-            TemporaryUnit = new List<BaseUnit>();
+            TemporaryUnit = new Queue<BaseUnit>();
         }
 
         public void Update()
         {
-            if (Unit != null)
-            {
-                GameObject.DestroyImmediate(Unit.gameObject);
-                Unit = null;
-            }
-            
             if (Tile != null && TemporaryUnit != null && TemporaryUnit.Count > 0)
             {
-                Unit = TemporaryUnit[0];
-
-                for (var i = 1; i < TemporaryUnit.Count; ++i)
+                while (TemporaryUnit.Count > 0)
                 {
-                    var nextUnit = TemporaryUnit[i];
+                    var nextUnit = TemporaryUnit.Dequeue();
                     if (Unit == null)
                     {
                         Unit = nextUnit;
@@ -48,6 +41,7 @@ namespace TheTile
                         if (Unit.Team == nextUnit.Team)
                         {
                             Unit.Hp += nextUnit.Hp;
+                            GameObject.DestroyImmediate(nextUnit.gameObject);
                         }
                         else
                         {
@@ -80,51 +74,31 @@ namespace TheTile
                 TemporaryUnit.Clear();
             }
 
-            if (Unit != null)
-            {
-                if (Unit.Team != Tile.Team)
-                {
-                    var parent = Tile.transform.parent;
-                    var pos = Tile.transform.localPosition;
-                    var pivotPos = Tile.Pivot.localPosition;
-                    
-                    GameObject.DestroyImmediate(Tile.gameObject);
-                    var emptyTilePrefab = Resources.Load<GameObject>("Empty Tile");
-                    var emptyTileInst = GameObject.Instantiate(emptyTilePrefab);
-
-                    emptyTileInst.transform.parent = parent;
-                    emptyTileInst.transform.localPosition = pos;
-                    emptyTileInst.transform.localRotation = Quaternion.identity;
-                    emptyTileInst.transform.localScale = Vector3.one;
-
-
-                    var emptyTile = emptyTileInst.GetComponent<EmptyTile>();
-                    emptyTile.Pivot.localPosition = pivotPos;
-                    Tile = emptyTile;
-                }
-                
-                Tile.SetTeam(Unit.Team);
-            }
-        }
-
-        public void AddUnit(BaseUnit unit)
-        {
-            TemporaryUnit.Add(unit);
-        }
-
-        public void MoveUnit(Vector3 getCellCenterWorld)
-        {
-            Unit.Move(getCellCenterWorld);
-            Unit = null;
-        }
-
-        public void GenerateUnit(Grid _grid, Transform transform)
-        {
-            if (Basement != null)
-            {
-                var baseUnit = Basement.GenerateUnit(transform);
-                TemporaryUnit.Add(baseUnit);
-            }
+            // if (Unit != null)
+            // {
+            //     if (Unit.Team != Tile.Team)
+            //     {
+            //         var parent = Tile.transform.parent;
+            //         var pos = Tile.transform.localPosition;
+            //         var pivotPos = Tile.Pivot.localPosition;
+            //         
+            //         GameObject.DestroyImmediate(Tile.gameObject);
+            //         var emptyTilePrefab = Resources.Load<GameObject>("Empty Tile");
+            //         var emptyTileInst = GameObject.Instantiate(emptyTilePrefab);
+            //
+            //         emptyTileInst.transform.parent = parent;
+            //         emptyTileInst.transform.localPosition = pos;
+            //         emptyTileInst.transform.localRotation = Quaternion.identity;
+            //         emptyTileInst.transform.localScale = Vector3.one;
+            //
+            //
+            //         var emptyTile = emptyTileInst.GetComponent<EmptyTile>();
+            //         emptyTile.Pivot.localPosition = pivotPos;
+            //         Tile = emptyTile;
+            //     }
+            //     
+            //     Tile.SetTeam(Unit.Team);
+            // }
         }
     }
 }

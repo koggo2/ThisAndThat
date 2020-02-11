@@ -1,17 +1,23 @@
-﻿using UnityEngine;
+﻿using System;
+using TheTile.Util;
+using UnityEngine;
 
 namespace TheTile.Game
 {
     public class BaseBasement : BaseObject
     {
-        private int dTurn = 0; 
+        private int dTurn = 0;
 
-        private void Awake()
+        public virtual void OnBeat()
         {
-            
+            var generatedUnit = GenerateUnit();
+            if (generatedUnit != null)
+            {
+                GameGrid.Instance.AddUnit(this, generatedUnit);
+            }
         }
         
-        public BaseUnit GenerateUnit(Transform parent)
+        public BaseUnit GenerateUnit()
         {
             ++dTurn;
 
@@ -36,8 +42,6 @@ namespace TheTile.Game
                 }
                 
                 var testUnitInstance = Instantiate(prefab);
-                testUnitInstance.transform.SetParent(parent);
-
                 var baseUnit = testUnitInstance.GetComponent<BaseUnit>(); 
                 baseUnit.SetTeam(Team);
             
@@ -45,6 +49,25 @@ namespace TheTile.Game
             }
 
             return null;
+        }
+
+        public void OnMouseDown()
+        {
+            Debug.Log("On Mouse Down");
+        }
+
+        public void OnMouseUp()
+        {
+            Debug.Log("On Mouse Up");
+            LineManager.Instance.HideLine();
+        }
+
+        public void OnMouseDrag()
+        {
+            if (SelectingObjects.MouseOveredTile != null)
+            {
+                LineManager.Instance.DrawArc(GameGrid.Instance.WorldToCellPos(transform.position), GameGrid.Instance.WorldToCellPos(SelectingObjects.MouseOveredTile.transform.position));                
+            }
         }
     }
 }

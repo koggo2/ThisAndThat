@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5187412197843389949}
   - component: {fileID: 3370122371706685171}
+  - component: {fileID: 2808482330344315191}
   m_Layer: 0
-  m_Name: TestBasement1
+  m_Name: Test Basement
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -46,8 +47,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Team: 0
-  _testUnitPrefab: {fileID: 3813584878125741084, guid: ef9a3449b675a664b921d262b3839795,
-    type: 3}
+--- !u!65 &2808482330344315191
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8017911253496696820}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 2, y: 2, z: 1}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1001 &228364350379534352
 PrefabInstance:
   m_ObjectHideFlags: 0

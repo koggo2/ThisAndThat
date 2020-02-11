@@ -10,7 +10,7 @@ namespace TheTile.Editor
         [MenuItem("The Tile/Generate Tile Map 10x10")]
         public static void GenerateTileMap()
         {
-            var tileMap = FindObjectOfType<TileMap>();
+            var tileMap = FindObjectOfType<GameHeart>();
             tileMap.GenerateTileMap();
         }
     }

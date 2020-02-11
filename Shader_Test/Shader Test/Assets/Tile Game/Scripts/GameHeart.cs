@@ -6,19 +6,15 @@ using UnityEngine;
 
 namespace TheTile
 {
-    public class TileMap : Singleton<TileMap>
+    public class GameHeart : Singleton<GameHeart>
     {
         [SerializeField] private GameGrid _gameGrid;
         [SerializeField] private GameObject _testTilePrefab;
 
         private Dictionary<Vector3Int, Vector3Int> _allWay;
         private List<Vector3Int> _way;
-
+        
         private float dTime = 1f;
-
-        private void Awake()
-        {
-        }
 
         public void GenerateTileMap()
         {
@@ -31,7 +27,7 @@ namespace TheTile
                     testTileInstance.name = $"Test Tile {x},{y}";
 
                     var cellPos = new Vector3Int(x, y, 0);
-                    testTileInstance.transform.localPosition = _gameGrid.CellPosToVector(cellPos);
+                    testTileInstance.transform.localPosition = _gameGrid.CellPosToWorld(cellPos);
                 }
             }
         }
@@ -47,22 +43,7 @@ namespace TheTile
                 {
                     if (tileData.Basement != null)
                     {
-                        var unit = tileData.Basement.GenerateUnit(transform);
-                        if (unit != null)
-                        {
-                            var cellPosition = _gameGrid.WorldToCellPos(tileData.Basement.transform.position);
-                            unit.transform.localPosition = _gameGrid.CellPosToVector(cellPosition);
-
-                            _gameGrid.AddUnit(cellPosition, unit);
-                        }
-                    }
-
-                    if (tileData.Unit != null)
-                    {
-                        var currentCellPosition = _gameGrid.WorldToCellPos(tileData.Unit.transform.position);
-                        var destinationCellPosition = currentCellPosition + _gameGrid.GetRandomNeighborTile(currentCellPosition);
-
-                        _gameGrid.MoveUnit(currentCellPosition, destinationCellPosition);
+                        tileData.Basement.OnBeat();
                     }
                 }
                 
@@ -74,10 +55,11 @@ namespace TheTile
             {
                 foreach (var cf in _allWay)
                 {
-                    var key = _gameGrid.CellPosToVector(cf.Key);
-                    var value = _gameGrid.CellPosToVector(cf.Value);
+                    var key = _gameGrid.CellPosToWorld(cf.Key);
+                    var value = _gameGrid.CellPosToWorld(cf.Value);
                     key += new Vector3(0f, 2f, 0f);
                     value += new Vector3(0f, 2f, 0f);
+                    
                     Debug.DrawLine(key, value, Color.cyan);
                 }
             }
@@ -87,10 +69,11 @@ namespace TheTile
                 var prev = _way[0];
                 foreach (var pos in _way)
                 {
-                    var a = _gameGrid.CellPosToVector(prev);
-                    var b = _gameGrid.CellPosToVector(pos);
+                    var a = _gameGrid.CellPosToWorld(prev);
+                    var b = _gameGrid.CellPosToWorld(pos);
                     a += new Vector3(0f, 2.1f, 0f);
                     b += new Vector3(0f, 2.1f, 0f);
+                    
                     Debug.DrawLine(a, b, Color.red);
                     prev = pos;
                 }
@@ -100,7 +83,6 @@ namespace TheTile
 
         public void OrderToMove(BaseTile baseTile)
         {
-            
             var aStar = new AStarSearch(_gameGrid, new Vector3Int(0, 0, 0), baseTile.CellPos);
             var index = 0;
 

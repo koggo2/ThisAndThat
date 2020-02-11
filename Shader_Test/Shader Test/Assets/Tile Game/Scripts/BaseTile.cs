@@ -44,11 +44,13 @@ namespace TheTile.Game
             instance.transform.localScale = Vector3.one;
 
             _selectionUI = instance;
+
+            SelectingObjects.MouseOveredTile = this;
         }
 
         private void OnMouseUp()
         {
-            TileMap.Instance.OrderToMove(this);
+            // TileMap.Instance.OrderToMove(this);
         }
 
         private void OnMouseExit()

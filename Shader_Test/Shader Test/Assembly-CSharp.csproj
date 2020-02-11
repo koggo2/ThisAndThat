@@ -86,10 +86,12 @@
      <Compile Include="Assets\Tile Game\Scripts\Const.cs" />
      <Compile Include="Assets\Tile Game\Scripts\EmptyTile.cs" />
      <Compile Include="Assets\Tile Game\Scripts\GameGrid.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\GameHeart.cs" />
      <Compile Include="Assets\Tile Game\Scripts\Interface\WeightedGraph.cs" />
      <Compile Include="Assets\Tile Game\Scripts\PriorityQueue.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\SelectingObjects.cs" />
      <Compile Include="Assets\Tile Game\Scripts\TileData.cs" />
-     <Compile Include="Assets\Tile Game\Scripts\TileMap.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\Util\LineManager.cs" />
      <Compile Include="Assets\Tutorial_Info\Scripts\Readme.cs" />
      <None Include="Assets\PolygonMini_Fantasy\Shaders\DistanceGradient.shader" />
      <None Include="Assets\PolygonMini_Fantasy\Shaders\WorldFog.shader" />

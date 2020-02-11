@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace TheTile
 {
-    public class GameGrid : MonoBehaviour, WeightedGraph<Vector3Int>
+    public class GameGrid : Singleton<GameGrid>, WeightedGraph<Vector3Int>
     {
         public static readonly Vector3Int[,] DIRS = new Vector3Int[,]
         {
@@ -72,7 +72,7 @@ namespace TheTile
             }
         }
 
-        public Vector3 CellPosToVector(Vector3Int cellPos)
+        public Vector3 CellPosToWorld(Vector3Int cellPos)
         {
             return _grid.GetCellCenterLocal(cellPos);
         }
@@ -82,14 +82,15 @@ namespace TheTile
             return _grid.WorldToCell(worldPos);
         }
 
-        public void AddUnit(Vector3Int cellPos, BaseUnit unit)
+        public void AddUnit(BaseBasement basement, BaseUnit unit)
         {
+            var cellPos = WorldToCellPos(basement.transform.position);
             if (!_gridMap.ContainsKey(cellPos))
             {
                 _gridMap.Add(cellPos, new TileData());
             }
             
-            _gridMap[cellPos].TemporaryUnit.Add(unit);
+            _gridMap[cellPos].TemporaryUnit.Enqueue(unit);
         }
 
         public void MoveUnit(Vector3Int currentPos, Vector3Int destination)
@@ -109,7 +110,7 @@ namespace TheTile
                 destMapData.Tile.AttachUnit(unit);
                 // unit.Move(_grid.GetCellCenterWorld(destination));
 
-                AddUnit(destination, unit);
+                // AddUnit(destination, unit);
             }
         }
 
