@@ -43,11 +43,24 @@ namespace TheTile
                 {
                     if (tileData.Basement != null)
                     {
-                        tileData.Basement.OnBeat();
+                        tileData.Basement.OnBeat_PreUpdateGrid();
                     }
                 }
                 
                 _gameGrid.UpdateGrid();
+                
+                foreach (var tileData in _gameGrid.TileData)
+                {
+                    if (tileData.Unit != null)
+                    {
+                        if (tileData.OnMarch)
+                        {
+                            tileData.Unit.SetMarchPosition(tileData.MarchPosition);
+                        }
+                        
+                        tileData.Unit.OnBeat_PostUpdateGrid();
+                    }
+                }
             }
 
 #if UNITY_EDITOR

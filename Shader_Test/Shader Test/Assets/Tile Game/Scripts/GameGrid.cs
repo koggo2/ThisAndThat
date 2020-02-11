@@ -85,16 +85,31 @@ namespace TheTile
         public void AddUnit(BaseBasement basement, BaseUnit unit)
         {
             var cellPos = WorldToCellPos(basement.transform.position);
-            if (!_gridMap.ContainsKey(cellPos))
-            {
-                _gridMap.Add(cellPos, new TileData());
-            }
-            
-            _gridMap[cellPos].TemporaryUnit.Enqueue(unit);
+            AddUnit(cellPos, unit);
         }
 
-        public void MoveUnit(Vector3Int currentPos, Vector3Int destination)
+        public void AddUnit(Vector3Int cellPos, BaseUnit unit)
         {
+            Debug.Log($"Add Unit, Pos = {cellPos}");
+            if (!_gridMap.ContainsKey(cellPos))
+            {
+                Debug.LogError($"Add Unit Error :: Has no grid map data..!");
+                return;
+            }
+
+            var gridData = _gridMap[cellPos];
+            unit.transform.SetParent(gridData.Tile.Pivot);
+            unit.transform.localPosition = Vector3.zero;
+            unit.transform.localRotation = Quaternion.identity;
+            unit.transform.localScale = Vector3.one;
+            
+            gridData.TemporaryUnit.Enqueue(unit);
+        }
+
+        public void MoveUnit(BaseUnit unit, Vector3Int destination)
+        {
+            var currentPos = WorldToCellPos(unit.transform.position);
+            
             if (!_gridMap.ContainsKey(currentPos))
             {
                 _gridMap.Add(currentPos, new TileData());
@@ -104,13 +119,12 @@ namespace TheTile
             var destMapData = _gridMap[destination];
             if (currentMapData.Unit != null)
             {
-                var unit = currentMapData.Unit;
                 currentMapData.Unit = null;
 
                 destMapData.Tile.AttachUnit(unit);
-                // unit.Move(_grid.GetCellCenterWorld(destination));
+                unit.Move(_grid.GetCellCenterWorld(destination));
 
-                // AddUnit(destination, unit);
+                AddUnit(destination, unit);
             }
         }
 
@@ -181,6 +195,29 @@ namespace TheTile
             }
 
             return directions[Random.Range(0, directions.Count)];
+        }
+
+        public void SetMarch(HouseBasement houseBasement)
+        {
+            var cellPos = WorldToCellPos(houseBasement.transform.position);
+            if (!_gridMap.ContainsKey(cellPos))
+            {
+                Debug.LogError($"Set March Error :: {cellPos} has no grid data..!");
+            }
+
+            var selectedCellPos = WorldToCellPos(SelectingObjects.MouseOveredTile.transform.position);
+
+            var tileData = _gridMap[cellPos];
+
+            if (cellPos == selectedCellPos)
+            {
+                tileData.OnMarch = false;
+            }
+            else
+            {
+                tileData.OnMarch = true;
+                tileData.MarchPosition = selectedCellPos;                
+            }
         }
     }
 }

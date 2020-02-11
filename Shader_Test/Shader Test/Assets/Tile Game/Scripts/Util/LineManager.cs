@@ -24,7 +24,6 @@ namespace TheTile.Util
 
         public void DrawArc(Vector3Int start, Vector3Int end)
         {
-            _lineRenderer.enabled = true;
             var vStart = GameGrid.Instance.CellPosToWorld(start);
             var vEnd = GameGrid.Instance.CellPosToWorld(end);
             
@@ -40,6 +39,8 @@ namespace TheTile.Util
                 
                 _lineRenderer.SetPosition(i, point);
             }
+            
+            _lineRenderer.enabled = true;
         }
 
         public void HideLine()

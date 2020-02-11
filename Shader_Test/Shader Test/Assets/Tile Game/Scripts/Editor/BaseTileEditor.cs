@@ -19,9 +19,9 @@ namespace TheTile.Editor
         {
             base.OnInspectorGUI();
 
-            if (GUILayout.Button("Create Basement"))
+            if (GUILayout.Button("Create House"))
             {
-                var basementPrefab = Resources.Load<GameObject>("Test Basement");
+                var basementPrefab = Resources.Load<GameObject>("House Basement");
                 var basementInstance = Instantiate(basementPrefab);
                 basementInstance.transform.SetParent(_tile.Pivot);
                 basementInstance.transform.localPosition = Vector3.zero;

@@ -12,6 +12,8 @@ namespace TheTile
         public BaseTile Tile;
         public BaseUnit Unit;
         public BaseBasement Basement;
+        public bool OnMarch = false;
+        public Vector3Int MarchPosition;
 
         public Queue<BaseUnit> TemporaryUnit;
         
@@ -22,6 +24,8 @@ namespace TheTile
             Tile = null;
             Unit = null;
             Basement = null;
+            OnMarch = false;
+            MarchPosition = Vector3Int.zero;
             TemporaryUnit = new Queue<BaseUnit>();
         }
 

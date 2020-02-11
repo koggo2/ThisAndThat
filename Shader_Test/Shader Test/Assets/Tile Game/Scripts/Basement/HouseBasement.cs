@@ -1,14 +1,14 @@
-﻿using System;
-using TheTile.Util;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TheTile.Game
 {
-    public class BaseBasement : BaseObject
+    public class HouseBasement : BaseBasement
     {
         private int dTurn = 0;
-
-        public virtual void OnBeat()
+        
+        public override void OnBeat_PreUpdateGrid()
         {
             var generatedUnit = GenerateUnit();
             if (generatedUnit != null)
@@ -51,23 +51,11 @@ namespace TheTile.Game
             return null;
         }
 
-        public void OnMouseDown()
+        public override void OnMouseUp()
         {
-            Debug.Log("On Mouse Down");
-        }
+            base.OnMouseUp();
 
-        public void OnMouseUp()
-        {
-            Debug.Log("On Mouse Up");
-            LineManager.Instance.HideLine();
-        }
-
-        public void OnMouseDrag()
-        {
-            if (SelectingObjects.MouseOveredTile != null)
-            {
-                LineManager.Instance.DrawArc(GameGrid.Instance.WorldToCellPos(transform.position), GameGrid.Instance.WorldToCellPos(SelectingObjects.MouseOveredTile.transform.position));                
-            }
+            GameGrid.Instance.SetMarch(this);
         }
     }
 }

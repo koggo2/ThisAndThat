@@ -79,7 +79,8 @@
      <Compile Include="Assets\Scripts\TestPlayer.cs" />
      <Compile Include="Assets\Scripts\TestTrap.cs" />
      <Compile Include="Assets\Tile Game\Scripts\AStarSearch.cs" />
-     <Compile Include="Assets\Tile Game\Scripts\BaseBasement.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\Basement\BaseBasement.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\Basement\HouseBasement.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseObject.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseTile.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseUnit.cs" />

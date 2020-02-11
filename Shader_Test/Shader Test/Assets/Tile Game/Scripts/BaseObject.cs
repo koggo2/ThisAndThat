@@ -12,5 +12,8 @@ namespace TheTile.Game
         }
 
         public TeamEnum Team;
+        
+        public virtual void OnBeat_PreUpdateGrid() { }
+        public virtual void OnBeat_PostUpdateGrid() { }
     }
 }
