@@ -45,7 +45,7 @@ namespace TheTile.Game
 
             _selectionUI = instance;
 
-            SelectingObjects.MouseOveredTile = this;
+            SelectingObjects.MouseOveredCellPos = GameGrid.Instance.WorldToCellPos(transform.position);
         }
 
         private void OnMouseUp()

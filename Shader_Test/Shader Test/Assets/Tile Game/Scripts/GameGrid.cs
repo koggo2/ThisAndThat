@@ -64,7 +64,7 @@ namespace TheTile
                 var cellPos = _grid.WorldToCell(basement.transform.position);
                 if (_gridMap.ContainsKey(cellPos))
                 {
-                    _gridMap[cellPos].Basement = basement;
+                    _gridMap[cellPos].UpdateBasement(basement);
                     _gridMap[cellPos].Team = basement.Team;
                     _gridMap[cellPos].Tile.SetTeam(basement.Team);
                 }
@@ -92,11 +92,7 @@ namespace TheTile
         public void AttachUnit(Vector3Int cellPos, BaseUnit unit, bool resetTransform = true)
         {
             // Debug.Log($"Add Unit, Pos = {cellPos}");
-            if (!_gridMap.ContainsKey(cellPos))
-            {
-                Debug.LogError($"Add Unit Error :: Has no grid map data..!");
-                return;
-            }
+            if (!HasCellPos(cellPos)) return;
 
             var gridData = _gridMap[cellPos];
             unit.transform.SetParent(gridData.Tile.Pivot);
@@ -112,11 +108,7 @@ namespace TheTile
         
         public void DetachUnit(Vector3Int cellPos)
         {
-            if (!_gridMap.ContainsKey(cellPos))
-            {
-                Debug.LogError($"Add Unit Error :: Has no grid map data..!");
-                return;
-            }
+            if (!HasCellPos(cellPos)) return;
             
             var gridData = _gridMap[cellPos];
             
@@ -187,12 +179,9 @@ namespace TheTile
         public void SetMarch(HouseBasement houseBasement)
         {
             var cellPos = WorldToCellPos(houseBasement.transform.position);
-            if (!_gridMap.ContainsKey(cellPos))
-            {
-                Debug.LogError($"Set March Error :: {cellPos} has no grid data..!");
-            }
+            if (!HasCellPos(cellPos)) return;
 
-            var selectedCellPos = WorldToCellPos(SelectingObjects.MouseOveredTile.transform.position);
+            var selectedCellPos = SelectingObjects.MouseOveredCellPos;
 
             var tileData = _gridMap[cellPos];
 
@@ -218,6 +207,35 @@ namespace TheTile
             
             Debug.LogError($"GetTileData Error :: GridMap has no {cellPos} data..!");
             return null;
+        }
+
+        public T BuildBasement<T>(Vector3Int cellPos, string prefabName, BaseObject.TeamEnum team) where T : BaseBasement
+        {
+            if (!HasCellPos(cellPos)) return null;
+            
+            var tileData = _gridMap[cellPos];
+            
+            var prefab = Resources.Load<GameObject>(prefabName);
+            var prefabInstance = Instantiate(prefab);
+            prefabInstance.transform.SetParent(tileData.Tile.Pivot);
+            prefabInstance.transform.localPosition = Vector3.zero;
+            
+            var baseBasement = prefabInstance.GetComponent<BaseBasement>();
+            baseBasement.Team = team;
+            tileData.UpdateBasement(baseBasement);
+
+            return baseBasement as T;
+        }
+
+        private bool HasCellPos(Vector3Int cellPos)
+        {
+            if (!_gridMap.ContainsKey(cellPos))
+            {
+                Debug.LogError($"Set March Error :: {cellPos} has no grid data..!");
+                return false;
+            }
+
+            return true;
         }
     }
 }

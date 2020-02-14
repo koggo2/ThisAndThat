@@ -6,8 +6,8 @@ namespace TheTile.Game
 {
     public class BaseBasement : BaseObject
     {
-        [SerializeField] private int _constructionValue;
-        [SerializeField] private int _hp;
+        [SerializeField] protected int _constructionValue;
+        [SerializeField] protected int _hp;
         [SerializeField] private TextMeshPro _textMesh;
 
         protected virtual void Awake()
@@ -19,25 +19,33 @@ namespace TheTile.Game
         {
             base.OnBeat_PostUpdateGrid();
 
-            _textMesh.text = $"{_hp} / {_constructionValue}";
+            UpdateUI();
+        }
+
+        protected void UpdateUI()
+        {
+            _textMesh.text = $"{_hp} / {_constructionValue}";   
         }
         
         public void OnMouseDown()
         {
-            Debug.Log("On Mouse Down");
+            SelectingObjects.SelectedBasement = this;
         }
 
         public virtual void OnMouseUp()
         {
-            Debug.Log("On Mouse Up");
+            SelectingObjects.SelectedBasement = null;
             LineManager.Instance.HideLine();
         }
 
         public virtual void OnMouseDrag()
         {
-            if (SelectingObjects.MouseOveredTile != null)
+            var mouseOveredTileCellPos = SelectingObjects.MouseOveredCellPos;
+            var basementCellPos = GameGrid.Instance.WorldToCellPos(transform.position);
+
+            if (mouseOveredTileCellPos != basementCellPos)
             {
-                LineManager.Instance.DrawArc(GameGrid.Instance.WorldToCellPos(transform.position), GameGrid.Instance.WorldToCellPos(SelectingObjects.MouseOveredTile.transform.position));                
+                LineManager.Instance.DrawArc(basementCellPos, mouseOveredTileCellPos);                    
             }
         }
     }

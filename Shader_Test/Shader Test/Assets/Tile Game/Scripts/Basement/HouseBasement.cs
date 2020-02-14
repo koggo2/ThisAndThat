@@ -66,6 +66,9 @@ namespace TheTile.Game
             base.OnMouseUp();
 
             GameGrid.Instance.SetMarch(this);
+            var constructionBasement = GameGrid.Instance.BuildBasement<ConstructionBasement>(SelectingObjects.MouseOveredCellPos, "Construction Basement", Team);
+
+            constructionBasement.SetConstructionValue(_constructionValue);
         }
     }
 }

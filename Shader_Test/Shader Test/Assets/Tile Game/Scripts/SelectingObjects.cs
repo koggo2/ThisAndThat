@@ -6,6 +6,7 @@ namespace TheTile.Game
 {
     public static class SelectingObjects
     {
-        public static BaseObject MouseOveredTile;
+        public static BaseBasement SelectedBasement;
+        public static Vector3Int MouseOveredCellPos;
     }
 }

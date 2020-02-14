@@ -11,14 +11,15 @@ namespace TheTile
         public Vector3Int Pos;
         public BaseObject.TeamEnum Team;
         public BaseTile Tile;
-        public BaseBasement Basement;
+        
         public bool OnMarch = false;
         public Vector3Int MarchPosition;
 
         public BaseUnit Unit => _unit;
+        public BaseBasement Basement => _basement;
         
         private BaseUnit _unit;
-        
+        private BaseBasement _basement;
 
         public TileData()
         {
@@ -26,13 +27,28 @@ namespace TheTile
             Team = BaseObject.TeamEnum.NONE;
             Tile = null;
             _unit = null;
-            Basement = null;
+            _basement = null;
             OnMarch = false;
             MarchPosition = Vector3Int.zero;
         }
 
-        public void RemoveUnit()
+        public void UpdateBasement(BaseBasement basement)
         {
+            if (_basement != null)
+            {
+                GameObject.DestroyImmediate(_basement.gameObject);
+            }
+            
+            _basement = basement;
+        }
+
+        public void RemoveUnit(bool destroyUnit = false)
+        {
+            if (destroyUnit)
+            {
+                GameObject.DestroyImmediate(_unit.gameObject);
+            }
+            
             _unit = null;
         }
 

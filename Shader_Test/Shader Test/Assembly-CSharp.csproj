@@ -85,6 +85,7 @@
      <Compile Include="Assets\Tile Game\Scripts\BaseTile.cs" />
      <Compile Include="Assets\Tile Game\Scripts\BaseUnit.cs" />
      <Compile Include="Assets\Tile Game\Scripts\Const.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\ConstructionBasement.cs" />
      <Compile Include="Assets\Tile Game\Scripts\EmptyTile.cs" />
      <Compile Include="Assets\Tile Game\Scripts\GameGrid.cs" />
      <Compile Include="Assets\Tile Game\Scripts\GameHeart.cs" />
