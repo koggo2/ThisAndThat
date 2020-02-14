@@ -11,12 +11,13 @@ namespace TheTile
         public Vector3Int Pos;
         public BaseObject.TeamEnum Team;
         public BaseTile Tile;
-        public BaseUnit Unit;
         public BaseBasement Basement;
         public bool OnMarch = false;
         public Vector3Int MarchPosition;
 
-        public Queue<BaseUnit> TemporaryUnit;
+        public BaseUnit Unit => _unit;
+        
+        private BaseUnit _unit;
         
 
         public TileData()
@@ -24,60 +25,55 @@ namespace TheTile
             Pos = Vector3Int.zero;
             Team = BaseObject.TeamEnum.NONE;
             Tile = null;
-            Unit = null;
+            _unit = null;
             Basement = null;
             OnMarch = false;
             MarchPosition = Vector3Int.zero;
-            TemporaryUnit = new Queue<BaseUnit>();
         }
 
-        public void Update()
+        public void RemoveUnit()
         {
-            if (Tile != null && TemporaryUnit != null && TemporaryUnit.Count > 0)
+            _unit = null;
+        }
+
+        public void UpdateUnit(BaseUnit newUnit)
+        {
+            if (_unit == null)
             {
-                while (TemporaryUnit.Count > 0)
+                _unit = newUnit;
+            }
+            else
+            {
+                if (_unit.Team == newUnit.Team)
                 {
-                    var nextUnit = TemporaryUnit.Dequeue();
-                    if (Unit == null)
+                    _unit.Hp += newUnit.Hp;
+                    GameObject.DestroyImmediate(newUnit.gameObject);
+                }
+                else
+                {
+                    while (_unit.Hp > 0 && newUnit.Hp > 0)
                     {
-                        Unit = nextUnit;
+                        _unit.Hp -= newUnit.Power;
+                        newUnit.Hp -= newUnit.Hp - Unit.Power;                                
                     }
-                    else
+
+                    if (_unit.Hp <= 0)
                     {
-                        if (Unit.Team == nextUnit.Team)
-                        {
-                            Unit.Hp += nextUnit.Hp;
-                            GameObject.DestroyImmediate(nextUnit.gameObject);
-                        }
-                        else
-                        {
-                            while (Unit.Hp > 0 && nextUnit.Hp > 0)
-                            {
-                                Unit.Hp -= nextUnit.Power;
-                                nextUnit.Hp -= nextUnit.Hp - Unit.Power;                                
-                            }
+                        GameObject.DestroyImmediate(Unit.gameObject);
+                        _unit = null;
+                    }
 
-                            if (Unit.Hp <= 0)
-                            {
-                                GameObject.DestroyImmediate(Unit.gameObject);
-                                Unit = null;
-                            }
+                    if (newUnit.Hp <= 0)
+                    {
+                        GameObject.DestroyImmediate(newUnit.gameObject);
+                        newUnit = null;
+                    }
 
-                            if (nextUnit.Hp <= 0)
-                            {
-                                GameObject.DestroyImmediate(nextUnit.gameObject);
-                                nextUnit = null;
-                            }
-
-                            if (Unit == null && nextUnit != null)
-                            {
-                                Unit = nextUnit;
-                            }
-                        }
+                    if (_unit == null && newUnit != null)
+                    {
+                        _unit = newUnit;
                     }
                 }
-                
-                TemporaryUnit.Clear();
             }
         }
     }

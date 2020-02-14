@@ -47,8 +47,6 @@ namespace TheTile
                     }
                 }
                 
-                _gameGrid.UpdateGrid();
-                
                 foreach (var tileData in _gameGrid.TileData)
                 {
                     if (tileData.Basement != null)

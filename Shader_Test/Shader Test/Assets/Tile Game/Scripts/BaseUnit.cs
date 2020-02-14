@@ -48,6 +48,8 @@ namespace TheTile.Game
 
                 // Debug.Log($"Move : origin = {origin}, dest = {dest}, worldDest = {worldDest}");
                 
+                DetachUnitOnTile();
+                
                 while (t < 1f)
                 {
                     transform.position = Vector3.Lerp(origin, worldDest, t / 1f);
@@ -57,16 +59,25 @@ namespace TheTile.Game
                     t += Time.deltaTime;
                 }
 
-                UpdateTransformParent();
+                AttachUnitOnTile();
             }
         }
 
-        private void UpdateTransformParent()
+        private void DetachUnitOnTile()
         {
             var tileData = GameGrid.Instance.GetUnderTileData(this);
             if (tileData != null)
             {
-                GameGrid.Instance.AddUnit(tileData.Pos, this, false);
+                GameGrid.Instance.DetachUnit(tileData.Pos);
+            }
+        }
+
+        private void AttachUnitOnTile()
+        {
+            var tileData = GameGrid.Instance.GetUnderTileData(this);
+            if (tileData != null)
+            {
+                GameGrid.Instance.AttachUnit(tileData.Pos, this, false);
             }
         }
         

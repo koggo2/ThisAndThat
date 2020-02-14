@@ -11,7 +11,7 @@ namespace TheTile.Game
             var generatedUnit = GenerateUnit();
             if (generatedUnit != null)
             {
-                GameGrid.Instance.AddUnit(this, generatedUnit);
+                GameGrid.Instance.AttachUnit(this, generatedUnit);
             }
         }
 
@@ -23,7 +23,6 @@ namespace TheTile.Game
             if(tileData.OnMarch && tileData.Unit != null)
             {
                 var unit = tileData.Unit;
-                GameGrid.Instance.RemoveUnit(tileData);
                 unit.March(new AStarSearch(GameGrid.Instance, tileData.Pos, tileData.MarchPosition));
             }
         }

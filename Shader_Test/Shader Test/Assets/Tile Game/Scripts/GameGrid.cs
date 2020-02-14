@@ -83,15 +83,15 @@ namespace TheTile
             return _grid.WorldToCell(worldPos);
         }
 
-        public void AddUnit(BaseBasement basement, BaseUnit unit)
+        public void AttachUnit(BaseBasement basement, BaseUnit unit)
         {
             var cellPos = WorldToCellPos(basement.transform.position);
-            AddUnit(cellPos, unit);
+            AttachUnit(cellPos, unit);
         }
 
-        public void AddUnit(Vector3Int cellPos, BaseUnit unit, bool resetTransform = true)
+        public void AttachUnit(Vector3Int cellPos, BaseUnit unit, bool resetTransform = true)
         {
-            Debug.Log($"Add Unit, Pos = {cellPos}");
+            // Debug.Log($"Add Unit, Pos = {cellPos}");
             if (!_gridMap.ContainsKey(cellPos))
             {
                 Debug.LogError($"Add Unit Error :: Has no grid map data..!");
@@ -106,38 +106,21 @@ namespace TheTile
                 unit.transform.localRotation = Quaternion.identity;
                 unit.transform.localScale = Vector3.one;
             }
-            
-            gridData.TemporaryUnit.Enqueue(unit);
+
+            gridData.UpdateUnit(unit);
         }
-
-        public void MoveUnit(BaseUnit unit, Vector3Int destination)
+        
+        public void DetachUnit(Vector3Int cellPos)
         {
-            var currentPos = WorldToCellPos(unit.transform.position);
+            if (!_gridMap.ContainsKey(cellPos))
+            {
+                Debug.LogError($"Add Unit Error :: Has no grid map data..!");
+                return;
+            }
             
-            if (!_gridMap.ContainsKey(currentPos))
-            {
-                _gridMap.Add(currentPos, new TileData());
-            }
-
-            var currentMapData = _gridMap[currentPos];
-            var destMapData = _gridMap[destination];
-            if (currentMapData.Unit != null)
-            {
-                currentMapData.Unit = null;
-
-                destMapData.Tile.AttachUnit(unit);
-                unit.Move(_grid.GetCellCenterWorld(destination));
-
-                AddUnit(destination, unit);
-            }
-        }
-
-        public void UpdateGrid()
-        {
-            foreach (var gridValue in _gridMap.Values)
-            {
-                gridValue.Update();
-            }
+            var gridData = _gridMap[cellPos];
+            
+            gridData.RemoveUnit();
         }
 
         public bool Possible(Vector3Int pos)
@@ -235,17 +218,6 @@ namespace TheTile
             
             Debug.LogError($"GetTileData Error :: GridMap has no {cellPos} data..!");
             return null;
-        }
-
-        public void RemoveUnit(TileData tileData)
-        {
-            if (_gridMap.ContainsKey(tileData.Pos))
-            {
-                tileData.Unit = null;
-                return;
-            }
-            
-            Debug.LogError($"GetTileData Error :: GridMap has no {tileData.Pos} data..!");
         }
     }
 }

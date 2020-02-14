@@ -1,5 +1,4 @@
-﻿using System;
-using TheTile.Util;
+﻿using TheTile.Util;
 using TMPro;
 using UnityEngine;
 
