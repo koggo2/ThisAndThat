@@ -38,6 +38,8 @@ namespace TheTile.Game
                         Path.Add(CameFrom[rear]);
                         rear = CameFrom[rear];
                     }
+
+                    Path.Reverse();
                     break;
                 }
 

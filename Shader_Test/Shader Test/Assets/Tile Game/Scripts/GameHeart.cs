@@ -51,15 +51,19 @@ namespace TheTile
                 
                 foreach (var tileData in _gameGrid.TileData)
                 {
-                    if (tileData.Unit != null)
+                    if (tileData.Basement != null)
                     {
-                        if (tileData.OnMarch)
-                        {
-                            tileData.Unit.SetMarchPosition(tileData.MarchPosition);
-                        }
-                        
-                        tileData.Unit.OnBeat_PostUpdateGrid();
+                        tileData.Basement.OnBeat_PostUpdateGrid();
                     }
+                    // if (tileData.Unit != null)
+                    // {
+                    //     if (tileData.OnMarch)
+                    //     {
+                    //         tileData.Unit.SetMarchPosition(tileData.MarchPosition);
+                    //     }
+                    //     
+                    //     tileData.Unit.OnBeat_PostUpdateGrid();
+                    // }
                 }
             }
 

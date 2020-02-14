@@ -1,11 +1,28 @@
 ﻿using System;
 using TheTile.Util;
+using TMPro;
 using UnityEngine;
 
 namespace TheTile.Game
 {
     public class BaseBasement : BaseObject
     {
+        [SerializeField] private int _constructionValue;
+        [SerializeField] private int _hp;
+        [SerializeField] private TextMeshPro _textMesh;
+
+        protected virtual void Awake()
+        {
+            _hp = _constructionValue;
+        }
+        
+        public override void OnBeat_PostUpdateGrid()
+        {
+            base.OnBeat_PostUpdateGrid();
+
+            _textMesh.text = $"{_hp} / {_constructionValue}";
+        }
+        
         public void OnMouseDown()
         {
             Debug.Log("On Mouse Down");

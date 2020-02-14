@@ -50,6 +50,7 @@ namespace TheTile
                 var cellPos = _grid.WorldToCell(baseTile.transform.position);
                 var tileData = new TileData()
                 {
+                    Pos = cellPos,
                     Tile = baseTile,
                 };
                 tileData.Tile.CellPos = cellPos;
@@ -88,7 +89,7 @@ namespace TheTile
             AddUnit(cellPos, unit);
         }
 
-        public void AddUnit(Vector3Int cellPos, BaseUnit unit)
+        public void AddUnit(Vector3Int cellPos, BaseUnit unit, bool resetTransform = true)
         {
             Debug.Log($"Add Unit, Pos = {cellPos}");
             if (!_gridMap.ContainsKey(cellPos))
@@ -99,9 +100,12 @@ namespace TheTile
 
             var gridData = _gridMap[cellPos];
             unit.transform.SetParent(gridData.Tile.Pivot);
-            unit.transform.localPosition = Vector3.zero;
-            unit.transform.localRotation = Quaternion.identity;
-            unit.transform.localScale = Vector3.one;
+            if(resetTransform)
+            {
+                unit.transform.localPosition = Vector3.zero;
+                unit.transform.localRotation = Quaternion.identity;
+                unit.transform.localScale = Vector3.one;
+            }
             
             gridData.TemporaryUnit.Enqueue(unit);
         }
@@ -216,8 +220,32 @@ namespace TheTile
             else
             {
                 tileData.OnMarch = true;
-                tileData.MarchPosition = selectedCellPos;                
+                tileData.MarchPosition = selectedCellPos;
             }
+        }
+
+        public TileData GetUnderTileData(BaseObject baseObject)
+        {
+            var cellPos = WorldToCellPos(baseObject.transform.position);
+
+            if (_gridMap.ContainsKey(cellPos))
+            {
+                return _gridMap[cellPos];
+            }
+            
+            Debug.LogError($"GetTileData Error :: GridMap has no {cellPos} data..!");
+            return null;
+        }
+
+        public void RemoveUnit(TileData tileData)
+        {
+            if (_gridMap.ContainsKey(tileData.Pos))
+            {
+                tileData.Unit = null;
+                return;
+            }
+            
+            Debug.LogError($"GetTileData Error :: GridMap has no {tileData.Pos} data..!");
         }
     }
 }

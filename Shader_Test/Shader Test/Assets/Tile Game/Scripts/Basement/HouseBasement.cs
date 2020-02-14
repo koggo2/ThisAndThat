@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace TheTile.Game
 {
@@ -16,7 +14,20 @@ namespace TheTile.Game
                 GameGrid.Instance.AddUnit(this, generatedUnit);
             }
         }
-        
+
+        public override void OnBeat_PostUpdateGrid()
+        {
+            base.OnBeat_PostUpdateGrid();
+
+            var tileData = GameGrid.Instance.GetUnderTileData(this);
+            if(tileData.OnMarch && tileData.Unit != null)
+            {
+                var unit = tileData.Unit;
+                GameGrid.Instance.RemoveUnit(tileData);
+                unit.March(new AStarSearch(GameGrid.Instance, tileData.Pos, tileData.MarchPosition));
+            }
+        }
+
         public BaseUnit GenerateUnit()
         {
             ++dTurn;

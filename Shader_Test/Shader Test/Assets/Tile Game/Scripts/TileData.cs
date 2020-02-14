@@ -8,6 +8,7 @@ namespace TheTile
 {
     public class TileData
     {
+        public Vector3Int Pos;
         public BaseObject.TeamEnum Team;
         public BaseTile Tile;
         public BaseUnit Unit;
@@ -20,6 +21,7 @@ namespace TheTile
 
         public TileData()
         {
+            Pos = Vector3Int.zero;
             Team = BaseObject.TeamEnum.NONE;
             Tile = null;
             Unit = null;
@@ -77,32 +79,6 @@ namespace TheTile
                 
                 TemporaryUnit.Clear();
             }
-
-            // if (Unit != null)
-            // {
-            //     if (Unit.Team != Tile.Team)
-            //     {
-            //         var parent = Tile.transform.parent;
-            //         var pos = Tile.transform.localPosition;
-            //         var pivotPos = Tile.Pivot.localPosition;
-            //         
-            //         GameObject.DestroyImmediate(Tile.gameObject);
-            //         var emptyTilePrefab = Resources.Load<GameObject>("Empty Tile");
-            //         var emptyTileInst = GameObject.Instantiate(emptyTilePrefab);
-            //
-            //         emptyTileInst.transform.parent = parent;
-            //         emptyTileInst.transform.localPosition = pos;
-            //         emptyTileInst.transform.localRotation = Quaternion.identity;
-            //         emptyTileInst.transform.localScale = Vector3.one;
-            //
-            //
-            //         var emptyTile = emptyTileInst.GetComponent<EmptyTile>();
-            //         emptyTile.Pivot.localPosition = pivotPos;
-            //         Tile = emptyTile;
-            //     }
-            //     
-            //     Tile.SetTeam(Unit.Team);
-            // }
         }
     }
 }
