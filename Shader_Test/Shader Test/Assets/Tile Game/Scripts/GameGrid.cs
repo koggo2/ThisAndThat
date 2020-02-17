@@ -200,13 +200,14 @@ namespace TheTile
         {
             var cellPos = WorldToCellPos(baseObject.transform.position);
 
-            if (_gridMap.ContainsKey(cellPos))
-            {
-                return _gridMap[cellPos];
-            }
+            return GetTileData(cellPos);
+        }
+
+        public TileData GetTileData(Vector3Int cellPos)
+        {
+            if (!HasCellPos(cellPos)) return null;
             
-            Debug.LogError($"GetTileData Error :: GridMap has no {cellPos} data..!");
-            return null;
+            return _gridMap[cellPos];
         }
 
         public T BuildBasement<T>(Vector3Int cellPos, string prefabName, BaseObject.TeamEnum team) where T : BaseBasement

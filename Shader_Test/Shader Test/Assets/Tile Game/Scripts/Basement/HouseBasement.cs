@@ -65,10 +65,19 @@ namespace TheTile.Game
         {
             base.OnMouseUp();
 
-            GameGrid.Instance.SetMarch(this);
-            var constructionBasement = GameGrid.Instance.BuildBasement<ConstructionBasement>(SelectingObjects.MouseOveredCellPos, "Construction Basement", Team);
+            var thisTileData = GameGrid.Instance.GetUnderTileData(this);
+            if (thisTileData.Pos == SelectingObjects.MouseOveredCellPos)
+                return;
 
-            constructionBasement.SetConstructionValue(_constructionValue);
+            var targetTileData = GameGrid.Instance.GetTileData(SelectingObjects.MouseOveredCellPos);
+            
+            GameGrid.Instance.SetMarch(this);
+
+            if (targetTileData.Basement == null)
+            {
+                var constructionBasement = GameGrid.Instance.BuildBasement<ConstructionBasement>(SelectingObjects.MouseOveredCellPos, "Construction Basement", Team);
+                constructionBasement.SetConstructionValue(_constructionValue);
+            }
         }
     }
 }

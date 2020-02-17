@@ -33,6 +33,7 @@ namespace TheTile.Game
             if (_hp >= _constructionValue)
             {
                 var houseBasement = GameGrid.Instance.BuildBasement<HouseBasement>(tileData.Pos, "House Basement", Team);
+                Debug.Log($"Construction Complete :: {houseBasement.Hp} // {houseBasement.ConstructionValue}");
             }
         }
 
