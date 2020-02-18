@@ -78,7 +78,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb65f6e3580140745a183bc0a345149c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Team: 0
   CellPos: {x: 0, y: 0, z: 0}
   _pivot: {fileID: 2832300428049714828}
   _flag: {fileID: 6086666004439810485}
@@ -250,7 +249,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4322980502907178, guid: 1b7e257c84a45994da5972eb95fec7ac, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.93
+      value: 1.56
       objectReference: {fileID: 0}
     - target: {fileID: 4322980502907178, guid: 1b7e257c84a45994da5972eb95fec7ac, type: 3}
       propertyPath: m_LocalPosition.y
@@ -258,7 +257,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4322980502907178, guid: 1b7e257c84a45994da5972eb95fec7ac, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.97
+      value: 0.94
       objectReference: {fileID: 0}
     - target: {fileID: 4322980502907178, guid: 1b7e257c84a45994da5972eb95fec7ac, type: 3}
       propertyPath: m_LocalRotation.x

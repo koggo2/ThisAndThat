@@ -18,11 +18,6 @@ namespace TheTile.Game
             _pivot.localPosition = new Vector3(0f, Random.Range(-1f, 1f), 0f);
         }
         
-        public virtual void SetTeam(TeamEnum unitTeam)
-        {
-            Team = unitTeam;
-        }
-
         public void AttachUnit(BaseUnit unit)
         {
             unit.transform.parent = _pivot.transform;

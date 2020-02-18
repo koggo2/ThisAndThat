@@ -1,11 +1,15 @@
-﻿using System;
-using TheTile.Game;
+﻿using TheTile.Game;
 using UnityEngine;
 
 namespace TheTile
 {
-    public static class Const
+    public static class ConstData
     {
+        public const string NoneTilePrefabName = "Test Tile";
+        public const string EmptyTilePrefabName = "Empty Tile";
+
+        public const string HouseBasementPrefabName = "House Basement";
+        
         public static Color AColor = Color.green;
         public static Color BColor = Color.cyan;
 

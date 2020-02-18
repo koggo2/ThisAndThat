@@ -70,7 +70,7 @@ namespace TheTile
                     while (_unit.Hp > 0 && newUnit.Hp > 0)
                     {
                         _unit.Hp -= newUnit.Power;
-                        newUnit.Hp -= newUnit.Hp - Unit.Power;                                
+                        newUnit.Hp -= _unit.Power;                                
                     }
 
                     if (_unit.Hp <= 0)

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TheTile.Game;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace TheTile
 {
@@ -36,13 +37,11 @@ namespace TheTile
         
         private Dictionary<Vector3Int, TileData> _gridMap;
         private List<BaseBasement> _basements;
-        private List<BaseUnit> _units;
 
         private void Awake()
         {
             _gridMap = new Dictionary<Vector3Int, TileData>();
             _basements = new List<BaseBasement>();
-            _units = new List<BaseUnit>();
             
             var tiles = FindObjectsOfType<BaseTile>();
             foreach (var baseTile in tiles)
@@ -222,10 +221,28 @@ namespace TheTile
             prefabInstance.transform.localPosition = Vector3.zero;
             
             var baseBasement = prefabInstance.GetComponent<BaseBasement>();
-            baseBasement.Team = team;
+            baseBasement.SetTeam(team);
             tileData.UpdateBasement(baseBasement);
 
             return baseBasement as T;
+        }
+        
+        public void BuildTile(Vector3Int cellPos, string tilePrefabName, BaseObject.TeamEnum team)
+        {
+            if (!HasCellPos(cellPos)) return;
+            
+            var tileData = _gridMap[cellPos];
+
+            var prefab = Resources.Load<GameObject>(tilePrefabName);
+            var prefabInstance = Instantiate(prefab);
+            prefabInstance.transform.SetParent(tileData.Tile.transform.parent);
+            prefabInstance.transform.localPosition = tileData.Tile.transform.localPosition;
+            
+            DestroyImmediate(tileData.Tile.gameObject);
+            
+            var tile = prefabInstance.GetComponent<BaseTile>();
+            tile.SetTeam(team);
+            tileData.Tile = tile;
         }
 
         private bool HasCellPos(Vector3Int cellPos)

@@ -81,11 +81,6 @@ namespace TheTile.Game
             }
         }
         
-        public void SetTeam(TeamEnum team)
-        {
-            Team = team;
-        }
-
         public void SetMarchPosition(Vector3Int pos)
         {
             OnMarch = true;

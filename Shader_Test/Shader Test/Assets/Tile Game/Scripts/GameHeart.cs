@@ -9,7 +9,6 @@ namespace TheTile
     public class GameHeart : Singleton<GameHeart>
     {
         [SerializeField] private GameGrid _gameGrid;
-        [SerializeField] private GameObject _testTilePrefab;
 
         private Dictionary<Vector3Int, Vector3Int> _allWay;
         private List<Vector3Int> _way;
@@ -22,12 +21,13 @@ namespace TheTile
             {
                 for (int y = 0; y < 10; ++y)
                 {
-                    var testTileInstance = Instantiate(_testTilePrefab);
-                    testTileInstance.transform.SetParent(transform);
-                    testTileInstance.name = $"Test Tile {x},{y}";
+                    var gridUnitPrefab = Resources.Load<GameObject>("Grid/Grid Unit");
+                    var gridUnitInstance = Instantiate(gridUnitPrefab);
+                    gridUnitInstance.transform.SetParent(transform);
+                    gridUnitInstance.name = $"Grid Unit {x}:{y}";
 
                     var cellPos = new Vector3Int(x, y, 0);
-                    testTileInstance.transform.localPosition = _gameGrid.CellPosToWorld(cellPos);
+                    gridUnitInstance.transform.localPosition = _gameGrid.CellPosToWorld(cellPos);
                 }
             }
         }
