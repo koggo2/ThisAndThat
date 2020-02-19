@@ -1,4 +1,5 @@
-﻿using TheTile.Util;
+﻿using TheTile.UI;
+using TheTile.Util;
 using TMPro;
 using UnityEngine;
 
@@ -8,7 +9,6 @@ namespace TheTile.Game
     {
         [SerializeField] protected int _constructionValue;
         [SerializeField] protected int _hp;
-        [SerializeField] private TextMeshPro _textMesh;
 
         public int Hp => _hp;
         public int ConstructionValue => _constructionValue;
@@ -17,19 +17,17 @@ namespace TheTile.Game
         {
             _hp = _constructionValue;
         }
+
+        protected virtual void Start()
+        {
+            UIManager.Instance.RegisterBasementInfoUI(this);
+        }
         
         public override void OnBeat_PostUpdateGrid()
         {
             base.OnBeat_PostUpdateGrid();
-
-            UpdateUI();
         }
 
-        protected void UpdateUI()
-        {
-            _textMesh.text = $"{_hp} / {_constructionValue}";   
-        }
-        
         public void OnMouseDown()
         {
             SelectingObjects.SelectedBasement = this;

@@ -15,7 +15,6 @@ namespace TheTile.Game
         public void SetConstructionValue(int value)
         {
             _constructionValue = value;
-            UpdateUI();
         }
         
         public override void OnBeat_PostUpdateGrid()

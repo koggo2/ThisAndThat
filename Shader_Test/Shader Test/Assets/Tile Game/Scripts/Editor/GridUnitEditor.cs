@@ -27,7 +27,7 @@ namespace TheTile.Editor
                     var gridUnit = go.GetComponent<GridUnit>();
                     if (gridUnit != null)
                     {
-                        gridUnit.CreateTile(ConstData.NoneTilePrefabName);
+                        gridUnit.CreateTile(ConstData.Object_NoneTileName);
                     }
                 }
                 
@@ -40,7 +40,7 @@ namespace TheTile.Editor
                     var gridUnit = go.GetComponent<GridUnit>();
                     if (gridUnit != null)
                     {
-                        gridUnit.CreateTile(ConstData.EmptyTilePrefabName);
+                        gridUnit.CreateTile(ConstData.Object_EmptyTileName);
                     }
                 }
             }
@@ -54,7 +54,7 @@ namespace TheTile.Editor
                     var gridUnit = go.GetComponent<GridUnit>();
                     if (gridUnit != null)
                     {
-                        gridUnit.CreateBasement(ConstData.HouseBasementPrefabName);
+                        gridUnit.CreateBasement(ConstData.Object_HouseBasementName);
                     }
                 }
             }

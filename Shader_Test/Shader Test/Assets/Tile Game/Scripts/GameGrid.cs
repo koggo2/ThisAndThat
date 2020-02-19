@@ -34,6 +34,7 @@ namespace TheTile
         [SerializeField] private Grid _grid;
 
         public List<TileData> TileData => _gridMap.Values.ToList();
+        public List<BaseBasement> Basements => _basements;
         
         private Dictionary<Vector3Int, TileData> _gridMap;
         private List<BaseBasement> _basements;
@@ -142,38 +143,6 @@ namespace TheTile
                 }
             }
         }
-        
-        public Vector3Int GetRandomNeighborTile(Vector3Int originPos)
-        {
-            var parity = originPos.y & 1;
-            List<Vector3Int> directions = new List<Vector3Int>();
-            if (_gridMap.ContainsKey(originPos + DIRS[parity, 0]))
-            {
-                directions.Add(DIRS[parity, 0]);
-            }
-            if (_gridMap.ContainsKey(originPos + DIRS[parity, 1]))
-            {
-                directions.Add(DIRS[parity, 1]);
-            }
-            if (_gridMap.ContainsKey(originPos + DIRS[parity, 2]))
-            {
-                directions.Add(DIRS[parity, 2]);
-            }
-            if (_gridMap.ContainsKey(originPos + DIRS[parity, 3]))
-            {
-                directions.Add(DIRS[parity, 3]);
-            }
-            if (_gridMap.ContainsKey(originPos + DIRS[parity, 4]))
-            {
-                directions.Add(DIRS[parity, 4]);
-            }
-            if (_gridMap.ContainsKey(originPos + DIRS[parity, 5]))
-            {
-                directions.Add(DIRS[parity, 5]);
-            }
-
-            return directions[Random.Range(0, directions.Count)];
-        }
 
         public void SetMarch(HouseBasement houseBasement)
         {
@@ -223,6 +192,8 @@ namespace TheTile
             var baseBasement = prefabInstance.GetComponent<BaseBasement>();
             baseBasement.SetTeam(team);
             tileData.UpdateBasement(baseBasement);
+
+            _basements.Add(baseBasement);
 
             return baseBasement as T;
         }

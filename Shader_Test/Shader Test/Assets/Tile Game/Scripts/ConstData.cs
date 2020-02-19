@@ -5,10 +5,12 @@ namespace TheTile
 {
     public static class ConstData
     {
-        public const string NoneTilePrefabName = "Test Tile";
-        public const string EmptyTilePrefabName = "Empty Tile";
+        public const string Object_NoneTileName = "Test Tile";
+        public const string Object_EmptyTileName = "Empty Tile";
 
-        public const string HouseBasementPrefabName = "House Basement";
+        public const string Object_HouseBasementName = "House Basement";
+
+        public const string UI_BasementInfoName = "UI_BasementInfo";
         
         public static Color AColor = Color.green;
         public static Color BColor = Color.cyan;

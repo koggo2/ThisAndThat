@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using TheTile.UI;
+using UnityEngine;
 
 namespace TheTile.Game
 {
@@ -13,7 +15,12 @@ namespace TheTile.Game
 
         public TeamEnum Team => _team;
         [SerializeField] protected TeamEnum _team;
-        
+
+        protected void OnDestroy()
+        {
+            UIManager.Instance.UnregisterUI(this.gameObject.GetInstanceID());
+        }
+
         public virtual void OnBeat_PreUpdateGrid() { }
         public virtual void OnBeat_PostUpdateGrid() { }
 
