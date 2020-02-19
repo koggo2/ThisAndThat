@@ -99,6 +99,8 @@
      <Compile Include="Assets\Tile Game\Scripts\UI\UIBaseComponent.cs" />
      <Compile Include="Assets\Tile Game\Scripts\UI\UIBasementInfo.cs" />
      <Compile Include="Assets\Tile Game\Scripts\UI\UIManager.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\UI\UITargetComponent.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\UI\UIUnitInfo.cs" />
      <Compile Include="Assets\Tile Game\Scripts\Util\LineManager.cs" />
      <Compile Include="Assets\Tutorial_Info\Scripts\Readme.cs" />
      <None Include="Assets\PolygonMini_Fantasy\Shaders\DistanceGradient.shader" />

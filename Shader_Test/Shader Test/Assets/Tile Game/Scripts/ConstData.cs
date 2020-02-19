@@ -11,6 +11,7 @@ namespace TheTile
         public const string Object_HouseBasementName = "House Basement";
 
         public const string UI_BasementInfoName = "UI_BasementInfo";
+        public const string UI_UnitInfoName = "UI_UnitInfo";
         
         public static Color AColor = Color.green;
         public static Color BColor = Color.cyan;

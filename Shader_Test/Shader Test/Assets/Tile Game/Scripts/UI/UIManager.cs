@@ -24,29 +24,51 @@ namespace TheTile.UI
 
         public void RegisterBasementInfoUI(BaseBasement basement)
         {
-            if (basement is BaseBasement)
+            var prefab = Resources.Load<GameObject>($"UI/{ConstData.UI_BasementInfoName}");
+            if (prefab != null)
             {
-                var prefab = Resources.Load<GameObject>($"UI/{ConstData.UI_BasementInfoName}");
-                if (prefab != null)
-                {
-                    var instance = Instantiate(prefab);
-                    instance.transform.parent = _canvas.transform;
-                    instance.transform.localScale = Vector3.one;
-                    instance.transform.localRotation = Quaternion.identity;
+                var instance = Instantiate(prefab);
+                instance.transform.parent = _canvas.transform;
+                instance.transform.localScale = Vector3.one;
+                instance.transform.localRotation = Quaternion.identity;
                     
-                    var basementInfo = instance.GetComponent<UIBasementInfo>();
-                    basementInfo.Init(basement);
+                var basementInfo = instance.GetComponent<UIBasementInfo>();
+                basementInfo.Init(basement);
 
-                    var objectInstanceId = basement.gameObject.GetInstanceID();
-                    if (!_objectUIs.ContainsKey(objectInstanceId))
-                    {
-                        _objectUIs.Add(objectInstanceId, new List<UIBaseComponent>());
-                    }
-                    _objectUIs[objectInstanceId].Add(basementInfo);
-                    
-                    _autoUpdatingUI.Add(basementInfo);
-                    _autoPositioningUI.Add(basementInfo);
+                var objectInstanceId = basement.gameObject.GetInstanceID();
+                if (!_objectUIs.ContainsKey(objectInstanceId))
+                {
+                    _objectUIs.Add(objectInstanceId, new List<UIBaseComponent>());
                 }
+                _objectUIs[objectInstanceId].Add(basementInfo);
+                    
+                _autoUpdatingUI.Add(basementInfo);
+                _autoPositioningUI.Add(basementInfo);
+            }
+        }
+
+        public void RegisterUnitInfoUI(BaseUnit unit)
+        {
+            var prefab = Resources.Load<GameObject>($"UI/{ConstData.UI_UnitInfoName}");
+            if (prefab != null)
+            {
+                var instance = Instantiate(prefab);
+                instance.transform.parent = _canvas.transform;
+                instance.transform.localScale = Vector3.one;
+                instance.transform.localRotation = Quaternion.identity;
+                    
+                var unitInfo = instance.GetComponent<UIUnitInfo>();
+                unitInfo.Init(unit);
+
+                var objectInstanceId = unit.gameObject.GetInstanceID();
+                if (!_objectUIs.ContainsKey(objectInstanceId))
+                {
+                    _objectUIs.Add(objectInstanceId, new List<UIBaseComponent>());
+                }
+                _objectUIs[objectInstanceId].Add(unitInfo);
+                    
+                _autoUpdatingUI.Add(unitInfo);
+                _autoPositioningUI.Add(unitInfo);
             }
         }
 

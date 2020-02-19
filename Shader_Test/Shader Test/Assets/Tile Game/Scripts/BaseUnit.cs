@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using TheTile.UI;
 using UnityEngine;
 
 namespace TheTile.Game
@@ -21,15 +22,9 @@ namespace TheTile.Game
 
         private AStarSearch _aStar;
 
-        public override void OnBeat_PostUpdateGrid()
+        private void Start()
         {
-            base.OnBeat_PostUpdateGrid();
-            
-            if (OnMarch)
-            {
-                // GameGrid.Instance.MoveUnit(this, MarchPosition);
-                
-            }
+            UIManager.Instance.RegisterUnitInfoUI(this);
         }
 
         public void March(AStarSearch aStar)

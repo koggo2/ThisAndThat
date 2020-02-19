@@ -5,14 +5,14 @@ using UnityEngine;
 
 namespace TheTile.UI
 {
-    public class UIBasementInfo : UITargetComponent<BaseBasement>, IAutoUpdating, IAutoPositioning
+    public class UIUnitInfo : UITargetComponent<BaseUnit>, IAutoUpdating, IAutoPositioning
     {
         [SerializeField] private TextMeshProUGUI _textMeshPro;
-
+        
         public void UpdateUI()
         {
             if (_textMeshPro != null && Target != null)
-                _textMeshPro.text = $"{Target.Hp} / {Target.ConstructionValue}";
+                _textMeshPro.text = $"{Target.Hp}";
         }
 
         public void UpdatePosition(Camera camera, RectTransform canvasRect)
