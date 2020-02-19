@@ -1,6 +1,5 @@
 ﻿using TheTile.UI;
 using TheTile.Util;
-using TMPro;
 using UnityEngine;
 
 namespace TheTile.Game
@@ -21,33 +20,6 @@ namespace TheTile.Game
         protected virtual void Start()
         {
             UIManager.Instance.RegisterBasementInfoUI(this);
-        }
-        
-        public override void OnBeat_PostUpdateGrid()
-        {
-            base.OnBeat_PostUpdateGrid();
-        }
-
-        public void OnMouseDown()
-        {
-            SelectingObjects.SelectedBasement = this;
-        }
-
-        public virtual void OnMouseUp()
-        {
-            SelectingObjects.SelectedBasement = null;
-            LineManager.Instance.HideLine();
-        }
-
-        public virtual void OnMouseDrag()
-        {
-            var mouseOveredTileCellPos = SelectingObjects.MouseOveredCellPos;
-            var basementCellPos = GameGrid.Instance.WorldToCellPos(transform.position);
-
-            if (mouseOveredTileCellPos != basementCellPos)
-            {
-                LineManager.Instance.DrawArc(basementCellPos, mouseOveredTileCellPos);                    
-            }
         }
     }
 }

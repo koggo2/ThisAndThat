@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using TheTile.Game.Unit;
+using TheTile.Util;
+using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace TheTile.Game
@@ -18,12 +20,6 @@ namespace TheTile.Game
             _pivot.localPosition = new Vector3(0f, Random.Range(-1f, 1f), 0f);
         }
         
-        public void AttachUnit(BaseUnit unit)
-        {
-            unit.transform.parent = _pivot.transform;
-            unit.transform.localPosition = Vector3.zero;
-        }
-
         private void OnMouseEnter()
         {
             if (_selectionUI != null)
@@ -43,9 +39,42 @@ namespace TheTile.Game
             SelectingObjects.MouseOveredCellPos = GameGrid.Instance.WorldToCellPos(transform.position);
         }
 
+        private void OnMouseDown()
+        {
+            var thisTileData = GameGrid.Instance.GetUnderTileData(this);
+            if(thisTileData.Basement != null)
+                SelectingObjects.SelectedBasement = thisTileData.Basement;
+        }
+
+        private void OnMouseDrag()
+        {
+            var mouseOveredTileCellPos = SelectingObjects.MouseOveredCellPos;
+            var cellPos = GameGrid.Instance.WorldToCellPos(transform.position);
+
+            if (mouseOveredTileCellPos != cellPos)
+            {
+                LineManager.Instance.DrawArc(cellPos, mouseOveredTileCellPos);                    
+            }
+        }
+        
         private void OnMouseUp()
         {
-            // TileMap.Instance.OrderToMove(this);
+            var thisTileData = GameGrid.Instance.GetUnderTileData(this);
+            if (thisTileData.Pos == SelectingObjects.MouseOveredCellPos)
+                return;
+
+            var targetTileData = GameGrid.Instance.GetTileData(SelectingObjects.MouseOveredCellPos);
+            
+            GameGrid.Instance.SetMarch(thisTileData.Pos);
+
+            if (targetTileData.Basement == null)
+            {
+                var constructionBasement = GameGrid.Instance.BuildBasement<ConstructionBasement>(SelectingObjects.MouseOveredCellPos, ConstData.Object_ConstructionBasementName, Team);
+                constructionBasement.SetConstructionData(ConstData.Object_HouseBasementName);
+            }
+            
+            SelectingObjects.SelectedBasement = null;
+            LineManager.Instance.HideLine();
         }
 
         private void OnMouseExit()

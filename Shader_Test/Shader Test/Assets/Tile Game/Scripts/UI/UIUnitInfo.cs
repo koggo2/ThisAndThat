@@ -1,4 +1,4 @@
-﻿using TheTile.Game;
+﻿using TheTile.Game.Unit;
 using TheTile.UI.Interface;
 using TMPro;
 using UnityEngine;

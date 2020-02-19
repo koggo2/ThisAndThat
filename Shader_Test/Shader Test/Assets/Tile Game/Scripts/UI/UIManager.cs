@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TheTile.Game;
+using TheTile.Game.Unit;
 using TheTile.UI.Interface;
 using UnityEngine;
 
@@ -53,7 +54,7 @@ namespace TheTile.UI
             if (prefab != null)
             {
                 var instance = Instantiate(prefab);
-                instance.transform.parent = _canvas.transform;
+                instance.transform.SetParent(_canvas.transform);
                 instance.transform.localScale = Vector3.one;
                 instance.transform.localRotation = Quaternion.identity;
                     

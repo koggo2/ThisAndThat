@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TheTile.Game.Unit;
+using UnityEngine;
 
 namespace TheTile.Game
 {
@@ -6,15 +7,26 @@ namespace TheTile.Game
     {
         [SerializeField] private GameObject _fx;
 
+        private string _nextBasementName;
+
         protected override void Awake()
         {
             base.Awake();
             _hp = 0;
         }
         
-        public void SetConstructionValue(int value)
+        public void SetConstructionData(string nextBasementName)
         {
-            _constructionValue = value;
+            _nextBasementName = nextBasementName;
+            var nextBasementPrefab = Resources.Load<GameObject>(nextBasementName);
+            if (nextBasementPrefab != null)
+            {
+                var prefabBasementComponent = nextBasementPrefab.GetComponent<BaseBasement>();
+                if (prefabBasementComponent != null)
+                {
+                    _constructionValue = prefabBasementComponent.ConstructionValue;
+                }
+            }
         }
         
         public override void OnBeat_PostUpdateGrid()

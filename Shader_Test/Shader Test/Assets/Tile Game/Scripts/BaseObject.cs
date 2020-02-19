@@ -16,7 +16,7 @@ namespace TheTile.Game
         public TeamEnum Team => _team;
         [SerializeField] protected TeamEnum _team;
 
-        protected void OnDestroy()
+        protected virtual void OnDestroy()
         {
             UIManager.Instance.UnregisterUI(this.gameObject.GetInstanceID());
         }

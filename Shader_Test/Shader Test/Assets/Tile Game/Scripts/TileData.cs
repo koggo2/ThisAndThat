@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TheTile.Game;
+using TheTile.Game.Unit;
 using UnityEngine;
 
 namespace TheTile

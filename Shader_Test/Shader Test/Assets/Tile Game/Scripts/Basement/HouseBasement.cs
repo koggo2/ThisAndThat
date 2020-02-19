@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using TheTile.Game.Unit;
+using UnityEngine;
 
 namespace TheTile.Game
 {
@@ -38,11 +39,11 @@ namespace TheTile.Game
                 GameObject prefab = null;
                 if (Team == TeamEnum.A)
                 {
-                    prefab = Resources.Load<GameObject>("Test Team A");
+                    prefab = Resources.Load<GameObject>(ConstData.Unit_WorkerPrefabPath);
                 }
                 else
                 {
-                    prefab = Resources.Load<GameObject>("Test Team B");
+                    prefab = Resources.Load<GameObject>(ConstData.Unit_WorkerPrefabPath);
                 }
 
                 if (prefab == null)
@@ -52,6 +53,8 @@ namespace TheTile.Game
                 }
                 
                 var testUnitInstance = Instantiate(prefab);
+                testUnitInstance.transform.localScale = Vector3.one;
+                
                 var baseUnit = testUnitInstance.GetComponent<BaseUnit>(); 
                 baseUnit.SetTeam(Team);
             
@@ -59,25 +62,6 @@ namespace TheTile.Game
             }
 
             return null;
-        }
-
-        public override void OnMouseUp()
-        {
-            base.OnMouseUp();
-
-            var thisTileData = GameGrid.Instance.GetUnderTileData(this);
-            if (thisTileData.Pos == SelectingObjects.MouseOveredCellPos)
-                return;
-
-            var targetTileData = GameGrid.Instance.GetTileData(SelectingObjects.MouseOveredCellPos);
-            
-            GameGrid.Instance.SetMarch(this);
-
-            if (targetTileData.Basement == null)
-            {
-                var constructionBasement = GameGrid.Instance.BuildBasement<ConstructionBasement>(SelectingObjects.MouseOveredCellPos, "Construction Basement", Team);
-                constructionBasement.SetConstructionValue(_constructionValue);
-            }
         }
     }
 }

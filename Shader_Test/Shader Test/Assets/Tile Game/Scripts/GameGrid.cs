@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using TheTile.Game;
+using TheTile.Game.Unit;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -144,9 +145,8 @@ namespace TheTile
             }
         }
 
-        public void SetMarch(HouseBasement houseBasement)
+        public void SetMarch(Vector3Int cellPos)
         {
-            var cellPos = WorldToCellPos(houseBasement.transform.position);
             if (!HasCellPos(cellPos)) return;
 
             var selectedCellPos = SelectingObjects.MouseOveredCellPos;
