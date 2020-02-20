@@ -14,6 +14,7 @@ namespace TheTile
 
         public const string UI_BasementInfoName = "UI_BasementInfo";
         public const string UI_UnitInfoName = "UI_UnitInfo";
+        public const string UI_Cancel = "UI_Cancel";
 
         public static string Animation_Idle = "Idle";
         public static string Animation_Run = "Run";

@@ -73,6 +73,36 @@ namespace TheTile.UI
             }
         }
 
+        public void RegisterTargetUI<T>(T obj, string uiPrefabName) where T : BaseObject
+        {
+            var prefab = Resources.Load<GameObject>($"UI/{uiPrefabName}");
+            if (prefab != null)
+            {
+                var instance = Instantiate(prefab);
+                instance.transform.SetParent(_canvas.transform);
+                instance.transform.localScale = Vector3.one;
+                instance.transform.localRotation = Quaternion.identity;
+                    
+                var targetUI = instance.GetComponent<UITargetComponent<T>>();
+                targetUI.Init(obj);
+
+                var objectInstanceId = obj.gameObject.GetInstanceID();
+                if (!_objectUIs.ContainsKey(objectInstanceId))
+                {
+                    _objectUIs.Add(objectInstanceId, new List<UIBaseComponent>());
+                }
+                _objectUIs[objectInstanceId].Add(targetUI);
+
+                var autoUpdatingInterface = targetUI.GetComponent<IAutoUpdating>();
+                if(autoUpdatingInterface != null)
+                    _autoUpdatingUI.Add(autoUpdatingInterface);
+
+                var autoPositioningInterface = targetUI.GetComponent<IAutoPositioning>();
+                if(autoPositioningInterface != null)
+                    _autoPositioningUI.Add(autoPositioningInterface);
+            }
+        }
+
         public void UnregisterUI(int objectInstanceId)
         {
             if (!_objectUIs.ContainsKey(objectInstanceId)) return;

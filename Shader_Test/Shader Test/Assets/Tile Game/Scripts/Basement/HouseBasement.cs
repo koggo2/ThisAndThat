@@ -1,11 +1,16 @@
-﻿using TheTile.Game.Unit;
+﻿using System.Collections.Generic;
+using System.Linq;
+using TheTile.Game.Unit;
 using UnityEngine;
 
 namespace TheTile.Game
 {
     public class HouseBasement : BaseBasement
     {
+        public List<BaseUnit> GeneratedUnits => _generatedUnits;
+
         private int dTurn = 0;
+        private List<BaseUnit> _generatedUnits = new List<BaseUnit>();
         
         public override void OnBeat_PreUpdateGrid()
         {
@@ -21,10 +26,11 @@ namespace TheTile.Game
             base.OnBeat_PostUpdateGrid();
 
             var tileData = GameGrid.Instance.GetUnderTileData(this);
-            if(tileData.OnMarch && tileData.Unit != null)
+            if(tileData.APlaceToGo.Count > 0 && tileData.Unit != null)
             {
+                var toGoPos = tileData.APlaceToGo.First();
                 var unit = tileData.Unit;
-                unit.March(new AStarSearch(GameGrid.Instance, tileData.Pos, tileData.MarchPosition));
+                unit.March(new AStarSearch(GameGrid.Instance, tileData.Pos, toGoPos));
             }
         }
 
@@ -55,13 +61,24 @@ namespace TheTile.Game
                 var testUnitInstance = Instantiate(prefab);
                 testUnitInstance.transform.localScale = Vector3.one;
                 
-                var baseUnit = testUnitInstance.GetComponent<BaseUnit>(); 
+                var baseUnit = testUnitInstance.GetComponent<BaseUnit>();
+                baseUnit.OriginBasement = this;
                 baseUnit.SetTeam(Team);
+
+                _generatedUnits.Add(baseUnit);
             
-                return baseUnit;                
+                return baseUnit;
             }
 
             return null;
+        }
+
+        public void UnlinkGeneratedUnit(BaseUnit unit)
+        {
+            if (_generatedUnits.Contains(unit))
+            {
+                _generatedUnits.Remove(unit);
+            }
         }
     }
 }

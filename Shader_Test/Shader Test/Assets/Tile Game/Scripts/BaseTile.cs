@@ -59,20 +59,8 @@ namespace TheTile.Game
         
         private void OnMouseUp()
         {
-            var thisTileData = GameGrid.Instance.GetUnderTileData(this);
-            if (thisTileData.Pos == SelectingObjects.MouseOveredCellPos)
-                return;
-
-            var targetTileData = GameGrid.Instance.GetTileData(SelectingObjects.MouseOveredCellPos);
-            
-            GameGrid.Instance.SetMarch(thisTileData.Pos);
-
-            if (targetTileData.Basement == null)
-            {
-                var constructionBasement = GameGrid.Instance.BuildBasement<ConstructionBasement>(SelectingObjects.MouseOveredCellPos, ConstData.Object_ConstructionBasementName, Team);
-                constructionBasement.SetConstructionData(ConstData.Object_HouseBasementName);
-            }
-            
+            if(SelectingObjects.SelectedBasement != null)
+                GameController.Instance.MarchNBuild(GameGrid.Instance.WorldToCellPos(transform.position), SelectingObjects.MouseOveredCellPos);
             SelectingObjects.SelectedBasement = null;
             LineManager.Instance.HideLine();
         }

@@ -114,6 +114,7 @@
      <Compile Include="Assets\Tile Game\Scripts\ConstData.cs" />
      <Compile Include="Assets\Tile Game\Scripts\ConstructionBasement.cs" />
      <Compile Include="Assets\Tile Game\Scripts\EmptyTile.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\GameController.cs" />
      <Compile Include="Assets\Tile Game\Scripts\GameGrid.cs" />
      <Compile Include="Assets\Tile Game\Scripts\GameHeart.cs" />
      <Compile Include="Assets\Tile Game\Scripts\Grid\GridUnit.cs" />
@@ -125,6 +126,7 @@
      <Compile Include="Assets\Tile Game\Scripts\UI\Interfaces\IAutoUpdating.cs" />
      <Compile Include="Assets\Tile Game\Scripts\UI\UIBaseComponent.cs" />
      <Compile Include="Assets\Tile Game\Scripts\UI\UIBasementInfo.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\UI\UICancel.cs" />
      <Compile Include="Assets\Tile Game\Scripts\UI\UIManager.cs" />
      <Compile Include="Assets\Tile Game\Scripts\UI\UITargetComponent.cs" />
      <Compile Include="Assets\Tile Game\Scripts\UI\UIUnitInfo.cs" />

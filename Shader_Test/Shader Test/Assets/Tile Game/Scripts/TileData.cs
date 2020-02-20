@@ -1,6 +1,4 @@
-﻿
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using TheTile.Game;
 using TheTile.Game.Unit;
 using UnityEngine;
@@ -13,8 +11,9 @@ namespace TheTile
         public BaseObject.TeamEnum Team;
         public BaseTile Tile;
         
-        public bool OnMarch = false;
-        public Vector3Int MarchPosition;
+        public bool OnConstruction = false;
+        public List<Vector3Int> APlaceToGo = new List<Vector3Int>();
+        public List<Vector3Int> APlaceToCome = new List<Vector3Int>();
 
         public BaseUnit Unit => _unit;
         public BaseBasement Basement => _basement;
@@ -29,8 +28,7 @@ namespace TheTile
             Tile = null;
             _unit = null;
             _basement = null;
-            OnMarch = false;
-            MarchPosition = Vector3Int.zero;
+            OnConstruction = false;
         }
 
         public void UpdateBasement(BaseBasement basement)
@@ -41,6 +39,11 @@ namespace TheTile
             }
             
             _basement = basement;
+        }
+
+        public void RemoveBasement()
+        {
+            UpdateBasement(null);
         }
 
         public void RemoveUnit(bool destroyUnit = false)

@@ -13,8 +13,7 @@ namespace TheTile.Game.Unit
         }
 
         public int Power => _power;
-        public bool OnMarch = false;
-        public Vector3Int MarchPosition;
+        public HouseBasement OriginBasement { get; set; }
 
         [SerializeField] private int _hp = 0;
         [SerializeField] private int _power = 0;
@@ -33,17 +32,26 @@ namespace TheTile.Game.Unit
         {
             base.OnDestroy();
 
-            if (_moveCoroutine != null)
-            {
-                StopCoroutine(_moveCoroutine);
-                _moveCoroutine = null;
-            }
+            OriginBasement.UnlinkGeneratedUnit(this);
+
+            StopMarch();
         }
 
         public void March(AStarSearch aStar)
         {
             transform.parent = null;
+            
+            StopMarch();
             _moveCoroutine = StartCoroutine(Move(aStar));
+        }
+
+        public void StopMarch()
+        {
+            if (_moveCoroutine != null)
+            {
+                StopCoroutine(_moveCoroutine);
+                _moveCoroutine = null;
+            }
         }
 
         private IEnumerator Move(AStarSearch aStar)
@@ -105,23 +113,6 @@ namespace TheTile.Game.Unit
             {
                 GameGrid.Instance.AttachUnit(tileData.Pos, this, false);
             }
-        }
-        
-        public void SetMarchPosition(Vector3Int pos)
-        {
-            OnMarch = true;
-            MarchPosition = pos;
-        }
-
-        public void StopMarch()
-        {
-            OnMarch = false;
-            MarchPosition = Vector3Int.zero;
-        }
-
-        public void Move(Vector3 position)
-        {
-            transform.position = position;
         }
     }
 }

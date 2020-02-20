@@ -1,4 +1,5 @@
 ﻿using TheTile.Game.Unit;
+using TheTile.UI;
 using UnityEngine;
 
 namespace TheTile.Game
@@ -14,7 +15,14 @@ namespace TheTile.Game
             base.Awake();
             _hp = 0;
         }
-        
+
+        protected override void Start()
+        {
+            base.Start();
+
+            UIManager.Instance.RegisterTargetUI<BaseBasement>(this, ConstData.UI_Cancel);
+        }
+
         public void SetConstructionData(string nextBasementName)
         {
             _nextBasementName = nextBasementName;
@@ -41,11 +49,9 @@ namespace TheTile.Game
             
             base.OnBeat_PostUpdateGrid();
 
-            if (_hp >= _constructionValue)
+            if (_hp >= _constructionValue && !string.IsNullOrEmpty(_nextBasementName))
             {
-                GameGrid.Instance.BuildTile(tileData.Pos, "Empty Tile", Team);
-                var houseBasement = GameGrid.Instance.BuildBasement<HouseBasement>(tileData.Pos, "House Basement", Team);
-                Debug.Log($"Construction Complete :: {houseBasement.Hp} // {houseBasement.ConstructionValue}");
+                GameController.Instance.CompleteBasement(GameGrid.Instance.WorldToCellPos(transform.position), _nextBasementName);
             }
         }
 
