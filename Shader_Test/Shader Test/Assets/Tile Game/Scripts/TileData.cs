@@ -46,55 +46,26 @@ namespace TheTile
             UpdateBasement(null);
         }
 
+        public void SetUnit(BaseUnit unit)
+        {
+            if (Unit != null)
+            {
+                var pos = GameGrid.Instance.WorldToCellPos(unit.transform.position);
+                Debug.LogWarning($"{pos}, Already has unit..!");
+                return;
+            }
+
+            _unit = unit;
+        }
+
         public void RemoveUnit(bool destroyUnit = false)
         {
             if (destroyUnit)
             {
-                GameObject.DestroyImmediate(_unit.gameObject);
+                GameObject.Destroy(_unit.gameObject);
             }
             
             _unit = null;
-        }
-
-        public void UpdateUnit(BaseUnit newUnit)
-        {
-            if (_unit == null)
-            {
-                _unit = newUnit;
-            }
-            else
-            {
-                if (_unit.Team == newUnit.Team)
-                {
-                    _unit.Hp += newUnit.Hp;
-                    GameObject.DestroyImmediate(newUnit.gameObject);
-                }
-                else
-                {
-                    while (_unit.Hp > 0 && newUnit.Hp > 0)
-                    {
-                        _unit.Hp -= newUnit.Power;
-                        newUnit.Hp -= _unit.Power;                                
-                    }
-
-                    if (_unit.Hp <= 0)
-                    {
-                        GameObject.DestroyImmediate(Unit.gameObject);
-                        _unit = null;
-                    }
-
-                    if (newUnit.Hp <= 0)
-                    {
-                        GameObject.DestroyImmediate(newUnit.gameObject);
-                        newUnit = null;
-                    }
-
-                    if (_unit == null && newUnit != null)
-                    {
-                        _unit = newUnit;
-                    }
-                }
-            }
         }
     }
 }

@@ -18,7 +18,7 @@ namespace TheTile
 
         public static string Animation_Idle = "Idle";
         public static string Animation_Run = "Run";
-        public static string Animation_Attack01 = "Attack01";
+        public static string Animation_Attack1 = "Attack1";
 
         public static string Animation_Parameter_Moving = "Moving";
         

@@ -14,10 +14,18 @@ namespace TheTile.Game
         
         public override void OnBeat_PreUpdateGrid()
         {
-            var generatedUnit = GenerateUnit();
-            if (generatedUnit != null)
+            var tileData = GameGrid.Instance.GetUnderTileData(this);
+            if (tileData.Unit == null)
             {
-                GameGrid.Instance.AttachUnit(this, generatedUnit);
+                var generatedUnit = GenerateUnit();
+                if (generatedUnit != null)
+                {
+                    GameGrid.Instance.AttachUnit(this, generatedUnit);
+                }                
+            }
+            else
+            {
+                IncreaseUnit(tileData);
             }
         }
 
@@ -71,6 +79,34 @@ namespace TheTile.Game
             }
 
             return null;
+        }
+
+        public void IncreaseUnit(TileData tileData)
+        {
+            ++dTurn;
+
+            if (dTurn >= 2)
+            {
+                dTurn = 0;
+
+                GameObject prefab = null;
+                if (Team == TeamEnum.A)
+                {
+                    prefab = Resources.Load<GameObject>(ConstData.Unit_WorkerPrefabPath);
+                }
+                else
+                {
+                    prefab = Resources.Load<GameObject>(ConstData.Unit_WorkerPrefabPath);
+                }
+
+                if (prefab == null)
+                {
+                    Debug.LogError("Unit Prefab is null..!");
+                }
+
+                var baseUnit = prefab.GetComponent<BaseUnit>();
+                tileData.Unit.Hp += baseUnit.Hp;
+            }
         }
 
         public void UnlinkGeneratedUnit(BaseUnit unit)

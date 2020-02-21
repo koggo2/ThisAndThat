@@ -32,12 +32,12 @@ namespace TheTile
         
         [SerializeField] private Grid _grid;
 
-        public List<TileData> TileData => _gridMap.Values.ToList();
-        private Dictionary<Vector3Int, TileData> _gridMap;
+        public List<TileData> TileData => _tileMap.Values.ToList();
+        private Dictionary<Vector3Int, TileData> _tileMap;
 
         private void Awake()
         {
-            _gridMap = new Dictionary<Vector3Int, TileData>();
+            _tileMap = new Dictionary<Vector3Int, TileData>();
             
             var tiles = FindObjectsOfType<BaseTile>();
             foreach (var baseTile in tiles)
@@ -50,18 +50,18 @@ namespace TheTile
                 };
                 tileData.Tile.CellPos = cellPos;
                 
-                _gridMap.Add(cellPos, tileData);
+                _tileMap.Add(cellPos, tileData);
             }
 
             var basements = FindObjectsOfType<BaseBasement>();
             foreach (var basement in basements)
             {
                 var cellPos = _grid.WorldToCell(basement.transform.position);
-                if (_gridMap.ContainsKey(cellPos))
+                if (_tileMap.ContainsKey(cellPos))
                 {
-                    _gridMap[cellPos].UpdateBasement(basement);
-                    _gridMap[cellPos].Team = basement.Team;
-                    _gridMap[cellPos].Tile.SetTeam(basement.Team);
+                    _tileMap[cellPos].UpdateBasement(basement);
+                    _tileMap[cellPos].Team = basement.Team;
+                    _tileMap[cellPos].Tile.SetTeam(basement.Team);
                 }
             }
         }
@@ -87,7 +87,7 @@ namespace TheTile
             // Debug.Log($"Add Unit, Pos = {cellPos}");
             if (!HasCellPos(cellPos)) return;
 
-            var gridData = _gridMap[cellPos];
+            var gridData = _tileMap[cellPos];
             unit.transform.SetParent(gridData.Tile.Pivot);
             if(resetTransform)
             {
@@ -96,21 +96,26 @@ namespace TheTile
                 unit.transform.localScale = Vector3.one;
             }
 
-            gridData.UpdateUnit(unit);
+            gridData.SetUnit(unit);
         }
         
         public void DetachUnit(Vector3Int cellPos)
         {
             if (!HasCellPos(cellPos)) return;
             
-            var gridData = _gridMap[cellPos];
-            
+            var gridData = _tileMap[cellPos];
             gridData.RemoveUnit();
+        }
+
+        public void DetachUnit(BaseUnit unit)
+        {
+            var pos = WorldToCellPos(unit.transform.position);
+            DetachUnit(pos);
         }
 
         public bool Possible(Vector3Int pos)
         {
-            if (_gridMap.ContainsKey(pos))
+            if (_tileMap.ContainsKey(pos))
             {
                 return true;
             }
@@ -148,12 +153,12 @@ namespace TheTile
         {
             if (!HasCellPos(cellPos)) return null;
 
-            return _gridMap[cellPos];
+            return _tileMap[cellPos];
         }
 
         public bool HasCellPos(Vector3Int cellPos)
         {
-            if (!_gridMap.ContainsKey(cellPos))
+            if (!_tileMap.ContainsKey(cellPos))
             {
                 Debug.LogError($"Set March Error :: {cellPos} has no grid data..!");
                 return false;

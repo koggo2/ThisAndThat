@@ -61,6 +61,7 @@ namespace TheTile.Game
         {
             if(SelectingObjects.SelectedBasement != null)
                 GameController.Instance.MarchNBuild(GameGrid.Instance.WorldToCellPos(transform.position), SelectingObjects.MouseOveredCellPos);
+            
             SelectingObjects.SelectedBasement = null;
             LineManager.Instance.HideLine();
         }

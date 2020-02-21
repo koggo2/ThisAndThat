@@ -9,7 +9,11 @@ namespace TheTile.Game
         [SerializeField] protected int _constructionValue;
         [SerializeField] protected int _hp;
 
-        public int Hp => _hp;
+        public int Hp
+        {
+            get => _hp;
+            set => _hp = value;
+        }
         public int ConstructionValue => _constructionValue;
 
         protected virtual void Awake()

@@ -95,14 +95,5 @@ namespace TheTile
             }
 #endif
         }
-
-        public void OrderToMove(BaseTile baseTile)
-        {
-            var aStar = new AStarSearch(_gameGrid, new Vector3Int(0, 0, 0), baseTile.CellPos);
-            var index = 0;
-
-            _allWay = aStar.CameFrom;
-            _way = aStar.Path;
-        }
     }
 }

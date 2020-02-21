@@ -114,6 +114,8 @@
      <Compile Include="Assets\Tile Game\Scripts\ConstData.cs" />
      <Compile Include="Assets\Tile Game\Scripts\ConstructionBasement.cs" />
      <Compile Include="Assets\Tile Game\Scripts\EmptyTile.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\GameController.Battle.cs" />
+     <Compile Include="Assets\Tile Game\Scripts\GameController.Build.cs" />
      <Compile Include="Assets\Tile Game\Scripts\GameController.cs" />
      <Compile Include="Assets\Tile Game\Scripts\GameGrid.cs" />
      <Compile Include="Assets\Tile Game\Scripts\GameHeart.cs" />

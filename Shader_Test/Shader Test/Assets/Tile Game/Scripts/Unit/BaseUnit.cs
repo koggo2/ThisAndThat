@@ -33,8 +33,9 @@ namespace TheTile.Game.Unit
             base.OnDestroy();
 
             OriginBasement.UnlinkGeneratedUnit(this);
-
-            StopMarch();
+            
+            StopAllCoroutines();
+            CancelInvoke();
         }
 
         public void March(AStarSearch aStar)
@@ -66,14 +67,15 @@ namespace TheTile.Game.Unit
             foreach (var dest in aStar.Path)
             {
                 ++index;
+
+                if (gameObject == null)
+                    yield break;
                 
                 var origin = transform.position;
                 var worldDest = GameGrid.Instance.CellPosToWorld(dest);
                 var t = 0f;
 
-                // Debug.Log($"Move : origin = {origin}, dest = {dest}, worldDest = {worldDest}");
-                
-                DetachUnitOnTile();
+                GameController.Instance.DetachUnitOnTile(this);
 
                 if (index != 0)
                 {
@@ -84,6 +86,8 @@ namespace TheTile.Game.Unit
                 
                 while (t < 1f)
                 {
+                    yield return CheckNextTile(dest);
+                    
                     transform.position = Vector3.Lerp(origin, worldDest, t / 1f);
                     // Debug.Log($"Move : t = {t}, position = {transform.position}");
                     yield return null;
@@ -91,27 +95,28 @@ namespace TheTile.Game.Unit
                     t += Time.deltaTime;
                 }
 
-                AttachUnitOnTile();
+                GameController.Instance.AttachUnitOnTile(dest, this);
             }
             if(_animator != null)
                 _animator.SetBool(ConstData.Animation_Parameter_Moving, false);
         }
 
-        private void DetachUnitOnTile()
+        private IEnumerator CheckNextTile(Vector3Int nextCellPos)
         {
-            var tileData = GameGrid.Instance.GetUnderTileData(this);
-            if (tileData != null)
+            var nextTileData = GameGrid.Instance.GetTileData(nextCellPos);
+            while ((nextTileData.Basement != null && Team != nextTileData.Basement.Team) || (nextTileData.Unit != null && Team != nextTileData.Unit.Team))
             {
-                GameGrid.Instance.DetachUnit(tileData.Pos);
+                GameController.Instance.Battle(GameGrid.Instance.WorldToCellPos(transform.position), nextCellPos);
+                yield return null;
             }
         }
 
-        private void AttachUnitOnTile()
+        public virtual void Attack()
         {
-            var tileData = GameGrid.Instance.GetUnderTileData(this);
-            if (tileData != null)
+            if(_animator != null)
             {
-                GameGrid.Instance.AttachUnit(tileData.Pos, this, false);
+                _animator.SetBool(ConstData.Animation_Parameter_Moving, false);
+                _animator.Play(ConstData.Animation_Attack1);
             }
         }
     }
