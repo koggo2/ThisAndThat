@@ -5,6 +5,8 @@ namespace TheTile
 {
     public static class ConstData
     {
+        public static readonly Vector3 TileScale = new Vector3(0.65f, 1f, 0.75f);
+
         public const string Object_NoneTileName = "Test Tile";
         public const string Object_EmptyTileName = "Empty Tile";
         public const string Object_ConstructionBasementName = "Construction Basement";

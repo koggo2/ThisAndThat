@@ -1,4 +1,5 @@
 ﻿using TheTile.Game;
+using TheTile.Util;
 using UnityEngine;
 
 namespace TheTile
@@ -12,20 +13,14 @@ namespace TheTile
 #if UNITY_EDITOR
         public void CreateTile(string prefabName)
         {
-            if (_tile != null)
-            {
-                DestroyImmediate(_tile);
-                _tile = null;
-                _basement = null;
-            }
-            
-            var prefab = Resources.Load<GameObject>(prefabName);
-            var instance = Instantiate(prefab);
-            instance.transform.SetParent(transform);
-            instance.transform.localPosition = Vector3.zero;
-            instance.name = prefabName;
+            ClearTile();
 
-            _tile = instance;
+            _tile = ResourceManager.NewTile(prefabName, transform);
+            var baseTile = _tile.GetComponent<BaseTile>();
+            if (baseTile != null)
+            {
+                baseTile.UpdatePivotScale();
+            }
         }
 
         public void CreateBasement(string prefabName)
@@ -53,6 +48,16 @@ namespace TheTile
         {
             _tile?.GetComponent<BaseObject>().SetTeam(team);
             _basement?.GetComponent<BaseObject>().SetTeam(team);
+        }
+        
+        public void ClearTile()
+        {
+            if (_tile != null)
+            {
+                DestroyImmediate(_tile);
+                _tile = null;
+                _basement = null;
+            }
         }
 #endif
     }

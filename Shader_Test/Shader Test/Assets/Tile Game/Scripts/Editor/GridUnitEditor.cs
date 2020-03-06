@@ -20,6 +20,18 @@ namespace TheTile.Editor
             base.OnInspectorGUI();
 
             GUILayout.Label("Tile");
+            if (GUILayout.Button("Clear Tile"))
+            {
+                foreach (var go in Selection.gameObjects)
+                {
+                    var gridUnit = go.GetComponent<GridUnit>();
+                    if (gridUnit != null)
+                    {
+                        gridUnit.ClearTile();
+                    }
+                }
+            }
+            
             if (GUILayout.Button("Create None Tile"))
             {
                 foreach (var go in Selection.gameObjects)

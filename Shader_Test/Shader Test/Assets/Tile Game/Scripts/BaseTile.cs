@@ -1,5 +1,4 @@
-﻿using TheTile.Game.Unit;
-using TheTile.Util;
+﻿using TheTile.Util;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -17,7 +16,7 @@ namespace TheTile.Game
         [ExecuteInEditMode]
         private void Awake()
         {
-            _pivot.localPosition = new Vector3(0f, Random.Range(-1f, 1f), 0f);
+            UpdatePivotScale();
         }
         
         private void OnMouseEnter()
@@ -71,6 +70,14 @@ namespace TheTile.Game
             if (_selectionUI != null)
             {
                 DestroyImmediate(_selectionUI);                
+            }
+        }
+
+        public void UpdatePivotScale()
+        {
+            if(_pivot != null)
+            {
+                _pivot.localScale = ConstData.TileScale;
             }
         }
     }
